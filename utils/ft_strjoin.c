@@ -28,6 +28,7 @@ static char	*ft_strcat(char *str1, char *str2)
 		str1[i + j] = str2[j];
 		j++;
 	}
+	//str2[j] = '/';
 	str1[i + j] = '\0';
 	return (str1);
 }
@@ -44,15 +45,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = ft_strlen((char *)s1);
 	j = ft_strlen((char *)s2);
-	str = (char *)malloc(i + j +1);
+	str = (char *)malloc(i + j + 1);
 	if (!str)
 		return (NULL);
 	str[0] = '\0';
 	if (!str)
 		return (NULL);
 	ft_strcat(str, (char *)s1);
-    int a = ft_strlen(str) - 1;
-    str[a] = '/';
 	ft_strcat(str, (char *)s2);
 	return (str);
 }

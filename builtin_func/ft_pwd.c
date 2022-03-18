@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-void    ft_pwd(void)
+void	ft_pwd(void)
 {
-	char	buff[100];
+	char	buff[256];
 
 	getcwd(buff, sizeof(buff));
 	printf("%s\n" , buff);

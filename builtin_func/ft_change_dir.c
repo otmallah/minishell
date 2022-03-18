@@ -14,7 +14,9 @@
 
 void    ft_cd(char *path)
 {
-    printf("%s \n" , path);
-    chdir(path);
-    exit(0);
+    int a;
+
+    a = chdir(path);
+    if (a != 0)
+        perror("error ");
 }

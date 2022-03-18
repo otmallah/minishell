@@ -1,44 +1,46 @@
 
 #include "minishell.h"
 
-char	*find_PATH(char **env)
+void	built_func(char *av, char *av2, char *av3)
 {
-	int i;
-	char *tab;
-
-	i = 0;
-	while (env[i])
+	if (strcmp(av, "pwd") == 0)
+		ft_pwd();
+	if (strcmp(av, "cd") == 0)
+		ft_cd(av2);
+	if (strcmp(av, "echo") == 0 && strcmp(av2 ,"-n") == 0)
 	{
-		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && env[i][3] == 'H')
-			tab = env[i];
-		i++;
+		//puts("hana");
+		printf("%s", av3);
+		exit(0);
 	}
-	return (tab);
+	if (strcmp(av, "exit") == 0)
+		ft_exit();
 }
 
 int main(int ac, char **av, char **env)
 {
+	t_mini index;
 	int i;
-	char *str;
-	char **tab;
-	char buff[256];
-	i = 0;
+	int a;
 
-	if (strcmp(av[1], "pwd") == 0)
-		ft_pwd();
-	if (strcmp(av[1], "cd") == 0)
-	{
-		puts(" ok ");
-		ft_cd(av[2]);
-	}
-	str = find_PATH(env);
-	tab = ft_split(str, ':');
 	i = 0;
-	while (tab[i])
+	//built_func(av[1], av[2], av[3]);
+	printf("PATH : %s\n", getenv(" "));
+	index.str = getenv("PATH");
+	index.str = ft_strchr(index.str, '/');
+	index.tab = ft_split(index.str, ':');
+	char *tes = ttyname(0);
+	printf("tes %s \n" , tes);
+	while (index.tab[i])
 	{
-	    str = ft_strjoin(tab[i], av[1]);
-	    if (access(str, F_OK) == 0)
-	        execve(str, &av[1], env);
-	    i++;
+		a = ft_strlen(index.tab[i]);
+		index.tab[i][a] = '/';
+		index.tab[i][a + 1] = '\0';
+	    index.str = ft_strjoin(index.tab[i], av[1]);
+	    if (access(index.str, F_OK) == 0)
+		{
+	        execve(index.str, &av[1], env);
+		}
+		i++;
 	}
 }

@@ -63,7 +63,7 @@ char	**ft_split(const char *s, char l)
 	if (!s)
 		return (NULL);
 	num_str = size(s, l);
-	tab = (char **)malloc(sizeof(char *) * (num_str + 1));
+	tab = (char **)malloc(sizeof(char *) * (num_str + 2));
 	if (!tab)
 		return (NULL);
 	check_p(s, num_str, l, tab);
