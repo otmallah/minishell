@@ -16,7 +16,5 @@ void	ft_pwd(void)
 {
 	char	buff[256];
 
-	getcwd(buff, sizeof(buff));
-	printf("%s\n" , buff);
-	exit(0);
+	printf("%s\n" , getcwd(buff, sizeof(buff)));
 }

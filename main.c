@@ -1,36 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/19 15:18:10 by otmallah          #+#    #+#             */
+/*   Updated: 2022/03/19 18:28:05 by otmallah         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "minishell.h"
 
-void	built_func(char *av, char *av2, char *av3)
+void	built_func(char *av, char *av2, char *av3, t_mini *index)
 {
-	if (strcmp(av, "pwd") == 0)
+	if (ft_strcmp(av, "pwd") == 0)
 		ft_pwd();
-	if (strcmp(av, "cd") == 0)
-		ft_cd(av2);
-	if (strcmp(av, "echo") == 0 && strcmp(av2 ,"-n") == 0)
+	if (ft_strcmp(av, "cd") == 0)
 	{
-		//puts("hana");
-		printf("%s", av3);
+		ft_cd(av2);
 		exit(0);
 	}
-	if (strcmp(av, "exit") == 0)
+	if (ft_strcmp(av, "echo") == 0 && ft_strcmp(av2 ,"-n") == 0)
+	{
+		ft_echo(av3, index);
+	}
+	if (ft_strcmp(av, "exit") == 0)
 		ft_exit();
+	if (ft_strcmp(av, "env") == 0)
+		ft_env(index);
 }
 
 int main(int ac, char **av, char **env)
 {
 	t_mini index;
+	char *read;
 	int i;
 	int a;
 
 	i = 0;
-	//built_func(av[1], av[2], av[3]);
-	printf("PATH : %s\n", getenv(" "));
+	if (ac == 1)
+	exit(0);
+	index.string = env;
+	built_func(av[1], av[2], av[3], &index);
 	index.str = getenv("PATH");
 	index.str = ft_strchr(index.str, '/');
 	index.tab = ft_split(index.str, ':');
-	char *tes = ttyname(0);
-	printf("tes %s \n" , tes);
 	while (index.tab[i])
 	{
 		a = ft_strlen(index.tab[i]);

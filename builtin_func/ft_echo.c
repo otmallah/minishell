@@ -12,7 +12,18 @@
 
 #include "../minishell.h"
 
-void    ft_echo(char *str)
+void	ft_echo(char *str)
 {
-    
+	int i;
+	char *find;
+	
+	i = 0;
+	if (str[i] != '$')
+		printf("%s", str);
+	else
+	{
+		i++;
+		find = getenv(str + i);
+		printf("%s" , find);
+	}
 }
