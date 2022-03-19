@@ -14,12 +14,10 @@
 
 void    ft_cd(char *path)
 {
-    int a;
-    char buff[256];
+	int a;
+	char buff[256];
 
-    //printf("path %s\n", getcwd(buff, sizeof(buff)));
-    a = chdir(path);
-    if (a != 0)
-        perror("error ");
-    //printf("path %s\n", getcwd(buff, sizeof(buff)));
+	a = chdir(path);
+	if (a != 0)
+		perror("error ");
 }

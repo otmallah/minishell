@@ -24,7 +24,7 @@ void	built_func(char *av, char *av2, char *av3, t_mini *index)
 	}
 	if (ft_strcmp(av, "echo") == 0 && ft_strcmp(av2 ,"-n") == 0)
 	{
-		ft_echo(av3, index);
+		ft_echo(av3);
 	}
 	if (ft_strcmp(av, "exit") == 0)
 		ft_exit();

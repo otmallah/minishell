@@ -27,8 +27,8 @@ void    func_all(t_mini *index, char *str)
     while (index->tab[i])
 	{
 	    a = ft_strlen(index->tab[i]);
-	    index->tab[i][a] = '/';
-	    index->tab[i][a + 1] = '\0';
+	    index->tab[i][a] = '/'; // bach tkoun lpath kamla n '/'
+	    index->tab[i][a + 1] = '\0'; // bach nsali string
 	    index->str = ft_strjoin(index->tab[i], test[0]);
 	    if (access(index->str, F_OK) == 0)
 	    {
@@ -65,7 +65,7 @@ int main(int ac, char **av, char **env)
                 ft_cd(tmp[1]);
             else
             {
-                if (fork() == 0)
+                if (fork() == 0) // hna dert l fork bach n3ty child executy li cmd o ikhali main proc khedam
                 {
                     index.string = env;
                     index.str = getenv("PATH");
@@ -73,7 +73,7 @@ int main(int ac, char **av, char **env)
 	                index.tab = ft_split(index.str, ':');
                     func_all(&index, str);
                 }
-                wait(NULL);
+                wait(NULL); // hadi bach itsana hta isali childe 3ad i trunna
             }
         }
         //index.str = getenv("PATH");
