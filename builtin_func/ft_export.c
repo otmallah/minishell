@@ -1,27 +1,32 @@
-
 #include "../minishell.h"
 
-int ft_print(char **tab)
+int ft_print(char **tab, char *str, t_mini *index)
 {
     int i;
 
     i = 0;
     while (tab[i])
     {
-        printf("%s\n" , tab[i]);
+        if (str == NULL)
+            printf("%s\n" , tab[i]);
+        else
+        {
+            if (ft_strcmp(tab[i], str) == 0 && index->finde == NULL)
+                printf("%s=''\n", tab[i]);
+            else
+                printf("%s\n" , tab[i]);
+        }
         i++;
     }
 }
 
-void    ft_print_export(char **tab)
+void    ft_print_export(char **tab, char *str, t_mini *index)
 {
     int i;
     int a;
     char *temp = NULL;
 
     i = 0;
-    //a = ft_tablen(tab);
-    //printf("num = %d\n" , a);
     while (tab[i + 1] != NULL)
     {
         if (ft_strcmp(tab[i], tab[i + 1]) > 0)
@@ -33,9 +38,26 @@ void    ft_print_export(char **tab)
         }
         i++;
     }
-    ft_print(tab);
+    ft_print(tab, str, index);
     free(tab);
     exit(0);
+}
+
+char    *find_value(char *str, t_mini *index)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '=')
+        {
+            i++;
+            return(str + i);
+        }
+        i++;
+    }
+    return NULL;
 }
 
 void    ft_export(t_mini *index, char *str)
@@ -48,10 +70,18 @@ void    ft_export(t_mini *index, char *str)
 
     i = 0;
     j = 0;
+    a = 0;
     asc = 65;
     while (index->string[i])
         i++;
-    tab_exp = (char **)malloc(sizeof(char *) * i);
+    if (str)
+    {
+        index->finde = find_value(str, index);
+        a++;
+    }
+    else
+        str = NULL;
+    tab_exp = (char **)malloc(sizeof(char *) * (i + a));
     i = 0;
     while (tab_exp[i])
     {
@@ -65,11 +95,17 @@ void    ft_export(t_mini *index, char *str)
             j++;
         }
         if ((char)asc == 'Z')
+        {
+            if (a != 0) // bach n3raf bli rah dakhalt string
+                tab_exp[i] = str;
             break ;
+        }
         asc++;
         j = 0;
     }
-    tab_exp[i] = NULL;
-    //printf("== %s\n" , tab_exp[i - 1]);
-    ft_print_export(tab_exp);
+    if (a == 0)
+        tab_exp[i] = NULL; // ila makanch arg exp= expor
+    else
+        tab_exp[i + 1] = NULL; //ila kant arg exist exp = export name=value
+    ft_print_export(tab_exp, str, index);
 }
