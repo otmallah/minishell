@@ -22,4 +22,6 @@ void    ft_env(t_mini *index)
         printf("%s\n", index->string[i]);
         i++;
     }
+    if (index->finde != NULL)
+        printf("%s\n" , index->finde);
 }
