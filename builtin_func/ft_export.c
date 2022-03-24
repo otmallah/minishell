@@ -1,29 +1,152 @@
 #include "../minishell.h"
 
-#include "../minishell.h"
-
-int ft_print(char *str, t_mini *index)
+int	find_value(char *str)
 {
 	int i;
 
 	i = 0;
-	while (index->tab_exp[i])
+	while (str[i])
 	{
-		if (str == NULL)
-			printf("%s\n" , index->tab_exp[i]);
-		else
-		{
-			if (ft_strcmp(index->tab_exp[i], str) == 0 && index->finde == NULL)
-				printf("%s=''\n", index->tab_exp[i]);
-			else
-				printf("%s\n" , index->tab_exp[i]);
-		}
+		if (str[i] == '=')
+			return 1;
 		i++;
 	}
 	return 0;
 }
 
-void    ft_print_export(char *str, t_mini *index)
+void	ft_print_temp(char **tab, t_idx *id)
+{
+	int i;
+	int a;
+
+	i = 0;
+	while (i <= id->d)
+	{
+		printf("declare -x %s\n", tab[i]);
+		i++;
+	}
+}
+
+void	add_to_temp2(t_mini *index, t_idx *id)
+{
+	int i;
+	int j;
+	char **temp;
+
+	i = id->d;
+	j = 0;
+	temp = (char **)malloc(sizeof(char *) * id->c);
+	while (i >= 0)
+	{
+		temp[j] = index->tab_e[j];
+		j++;
+		i--;
+	}
+	index->tab_e = (char **)malloc(sizeof(char *) * id->c);
+	j = 0;
+	i = id->d;
+	while (i >= 0)
+	{
+		index->tab_e[j] = temp[j];
+		j++;
+		i--;
+	}
+}
+
+int find_len(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return i;
+		i++;
+	}
+	return 0;
+}
+
+int	find_duplicate(t_mini *index, char *str,t_idx *id)
+{
+	int i;
+	int j;
+	int a;
+	int res;
+	char *temp;
+	char *find;
+
+	i = id->d;
+	a = 0;
+	j = 0;
+	while (i >= 0)
+	{
+		a = find_value(str);
+		if (a == 1)
+		{
+			temp= ft_substr(str, 0, find_len(str));
+			if (ft_strcmp(ft_substr(index->tab_e[j], 0, find_len(index->tab_e[j])), temp) == 0)
+			{
+				index->tab_e[j] = str;
+				return 1;
+			}
+		}
+		if (ft_strcmp(index->tab_e[j], str) == 0)
+		{
+			return 1;
+		}
+		i--;
+		j++;
+	}
+	return 0;
+}
+
+void	ft_print(t_mini *index, char *str, t_idx *id)
+{
+	int i;
+	int j;
+	int a = 0;
+	char **temp;
+	char *str_2;
+
+	i = 0;
+	j = 0;
+	while (index->tab_exp[i])
+	{
+		if (str)
+		{
+			str_2 = ft_substr(index->tab_exp[i], 0, find_len(index->tab_exp[i]));
+			if (ft_strcmp(str, str_2) == 0)
+				a = 2;
+		}
+		printf("declare -x %s\n" , index->tab_exp[i]);
+		i++;
+	}
+	if (str != NULL && a != 2)
+	{
+		id->c++;
+		if (!index->tab_e)
+		{
+			index->tab_e = (char **)malloc(sizeof(char *) * id->c);
+			index->tab_e[id->d] = str;
+		}
+		else
+		{
+			j = find_duplicate(index, str, id);
+			//printf("j == %d\n", j);
+			if (j == 0)
+			{
+				add_to_temp2(index, id);
+				id->d++;
+				index->tab_e[id->d] = str;
+			}
+		}
+	}
+	if (index->tab_e)
+		ft_print_temp(index->tab_e, id);
+}
+
+void    ft_print_export(char *str, t_mini *index, t_idx *id)
 {
 	int i;
 	int a;
@@ -41,68 +164,18 @@ void    ft_print_export(char *str, t_mini *index)
 		}
 		i++;
 	}
-	ft_print(str, index);
-	free(index->tab_exp);
+	ft_print(index, str, id);
 }
 
-char    *find_value(char *str, t_mini *index)
+
+void	ft_export(t_mini *index, t_idx *id, char *str)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-		{
-			i++;
-			return(str);
-		}
-		i++;
-	}
-	return NULL;
-}
-
-void    ft_export(t_mini *index, char *str)
-{
-	int i;
-	int j;
-	int asc;
-
-	i = 0;
-	j = 0;
-	asc = 65;
-	while (index->string[i])
-		i++;
 	if (str)
 	{
-		index->finde = find_value(str, index);
+		id->cnt = find_value(str);
+		if (id->cnt == 1)
+			index->finde = str;
 		index->count++;
 	}
-	index->tab_exp = (char **)malloc(sizeof(char *) * (i + index->count));
-	i = 0;
-	while (index->tab_exp[i])
-	{
-		while (index->string[j])
-		{
-			if (index->string[j][0] == (char)asc)
-			{
-				index->tab_exp[i] = index->string[j];
-				i++;
-			}
-			j++;
-		}
-		if ((char)asc == 'Z')
-		{
-			if (index->count != 0) // bach n3raf bli rah dakhalt string
-				index->tab_exp[i] = str;
-			break ;
-		}
-		asc++;
-		j = 0;
-	}
-	if (index->count == 0)
-		index->tab_exp[i] = NULL; // ila makanch arg exp = export
-	else
-		index->tab_exp[i + 1] = NULL; //ila kant arg exist exp = export name=valuE
-	ft_print_export(str, index);
+	ft_print_export(str, index, id);
 }
