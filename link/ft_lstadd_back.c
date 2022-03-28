@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 21:10:58 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 21:10:59 by otmallah         ###   ########.fr       */
+/*   Created: 2021/11/16 18:35:50 by otmallah          #+#    #+#             */
+/*   Updated: 2021/11/16 18:35:52 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ft_exit(void)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-    printf("exit\n");
-    exit(1);
+	t_list	*last;
+
+	if (lst)
+	{
+		if (*lst)
+		{
+			last = ft_lstlast(*lst);
+			last->next = new;
+		}
+		else
+			*lst = new;
+	}
 }

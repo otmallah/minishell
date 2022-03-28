@@ -24,6 +24,9 @@ void	ft_echo(char *str)
 	{
 		i++;
 		find = getenv(str + i);
-		printf("%s" , find);
+		if (find == NULL)
+			printf("\n");
+		else
+			printf("%s" , find);
 	}
 }

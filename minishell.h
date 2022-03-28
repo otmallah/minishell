@@ -2,28 +2,73 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
- #include <signal.h>
+#include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
 typedef struct s_minishell
 {
-    char *str;
-    char **string;
-    char **tab;
-}   t_mini;
+	int		cnt;
+	char 	*str;
+	char 	**env_tab;
+	char 	*finde;
+	char 	**string;
+	char 	**tab;
+	char 	**tab_exp;
+	char 	**tab_e;
+	char 	*check;
+	char	**tab_unset;
+	int 	count2;
+}	t_mini;
 
-char	**ft_split(const char *s, char l);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+typedef struct s_idx
+{
+	int	a;
+	int	b;
+	int	c;
+	int	d;
+	int	cnt;
+	int	cot;
+	int	poor;
+}	t_idx;;
+
+typedef struct s_list {
+	void			*content;
+	struct s_list	*next;
+}		t_list;
+
+
+char	**ft_split(char *s, char l);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_pwd(void);
 void    ft_cd(char *path);
 char	*ft_strchr(const char *str, int c);
 void    ft_exit(void);
-void    ft_env(t_mini *index);
+void    ft_env(t_mini *index, t_idx *id);
 void	ft_echo(char *str);
+void	ft_export(t_mini *index, t_idx *id, char *str);
+void	ft_print_export(t_mini *index, t_idx *id, char *str);
+void	ft_unset(t_mini *index, t_idx *id, char *str);
+void	ft_exit(void);
 
 // utils
 
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+char	*ft_strrchr(const char *str, int c);
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void	ft_lstclear(t_list **lst, void (*del)(void *));
+
+//utils export
+
+int		find_dup(t_mini *index, t_idx *id, char *find);
+int		find_len3(char *str);
+void	add_to_temp(t_mini *index, t_idx *id);
+int		find_duplicate(t_mini *index, char *str,t_idx *id);
+void	add_to_temp2(t_mini *index, t_idx *id);
+int		find_value(char *str);
+int		find_len(char *str);

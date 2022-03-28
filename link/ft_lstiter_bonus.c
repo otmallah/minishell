@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_lstiteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 21:10:58 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 21:10:59 by otmallah         ###   ########.fr       */
+/*   Created: 2021/11/14 22:25:34 by otmallah          #+#    #+#             */
+/*   Updated: 2021/11/14 22:25:35 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void    ft_exit(void)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-    printf("exit\n");
-    exit(1);
+	if (!f)
+		return ;
+	while (lst)
+	{
+		(*f)(lst->content);
+		lst = lst->next;
+	}
 }

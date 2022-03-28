@@ -33,7 +33,7 @@ static int	size(const char	*s, char c)
 	return (j);
 }
 
-static void	check_p(const char *st, int num, char sep, char **tab)
+static void	check_p(char *st, int num, char sep, char **tab)
 {
 	int	start;
 	int	b;
@@ -55,7 +55,7 @@ static void	check_p(const char *st, int num, char sep, char **tab)
 	tab[i] = NULL;
 }
 
-char	**ft_split(const char *s, char l)
+char	**ft_split(char *s, char l)
 {
 	char	**tab;
 	int		num_str;

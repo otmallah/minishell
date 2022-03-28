@@ -32,7 +32,8 @@ static void	check(const char *s, char *su, int sta, int len)
 	su[j] = '\0';
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	j;

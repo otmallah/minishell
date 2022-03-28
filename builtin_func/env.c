@@ -27,63 +27,56 @@ void	ft_print2(char **tab, t_idx *idx)
 	}
 }
 
-void	add_to_temp(t_mini *index, t_idx *id)
+int tablen1(char **str)
 {
 	int i;
-	int j;
-	char **temp;
 
-	i = id->a;
-	j = 0;
-	temp = (char **)malloc(sizeof(char *) * id->b - 1);
-	while (i >= 0)
-	{
-		temp[j] = index->env_tab[j];
-		j++;
-		i--;
-	}
-	free(index->env_tab);
-	index->env_tab = (char **)malloc(sizeof(char *) * id->b);
-	i = id->a;
-	j = 0;
-	while (i >= 0)
-	{
-		index->env_tab[j] = temp[j];
-		j++;
-		i--;
-	}
-	free(temp);
+	i = 0;
+	while (str[i])
+		i++;
+	return i;
 }
 
 void    ft_env(t_mini *index, t_idx *id)
 {
-	int i;
+	int i = 0;
+	int a = 0;
+	int j = 0;
 	char	**tab;
 	char **temp;
 
-	i = 0;
 	while (index->string[i])
 	{
 		printf("%s\n", index->string[i]);
 		i++;
 	}
-	if (index->finde != NULL)
+	//puts("*-*-**-*-*-*-*-*-*-*-*-*-*-*-*");
+	if (index->env_tab)
 	{
-		id->b++;
-		if (!index->env_tab)
-		{
-			index->env_tab = (char **)malloc(sizeof(char *) * id->b);
-			index->env_tab[id->a] = index->finde;
-		}
-		else
-		{
-			add_to_temp(index, id);
-			if (index->finde != index->env_tab[id->a])
-			{
-				id->a++;
-				index->env_tab[id->a] = index->finde;
-			}
-		}
 		ft_print2(index->env_tab, id);
 	}
 }
+
+//void	ft_print_alllist(t_list *list)
+//{
+//	while (list != NULL)
+//	{
+//		printf("%s\n", list->content);
+//		list = list->next;
+//	}
+//}
+//
+//void    ft_env(t_mini *index, t_list *list)
+//{
+//    int i;
+//
+//    i = 0;
+//    list = ft_lstnew(index->tab_exp[i]);
+//    i += 1;
+//    while (index->tab_exp[i])
+//    {
+//        ft_lstadd_back(&list, ft_lstnew(index->tab_exp[i]));
+//        i++;
+//    }
+//	ft_print_alllist(list);
+//}

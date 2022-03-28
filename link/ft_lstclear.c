@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 21:10:58 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 21:10:59 by otmallah         ###   ########.fr       */
+/*   Created: 2021/11/14 19:21:17 by otmallah          #+#    #+#             */
+/*   Updated: 2021/11/14 19:21:19 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ft_exit(void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-    printf("exit\n");
-    exit(1);
+	int	i;
+
+	i = 0;
+	if (!del || !lst || !*lst)
+		return ;
+	while (lst)
+	{
+		del(lst[i]->content);
+		free(lst[i]);
+		lst[i] = lst[i]->next;
+	}
 }

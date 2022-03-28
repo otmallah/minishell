@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 21:10:58 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 21:10:59 by otmallah         ###   ########.fr       */
+/*   Created: 2021/11/14 19:26:28 by otmallah          #+#    #+#             */
+/*   Updated: 2021/11/14 19:26:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ft_exit(void)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-    printf("exit\n");
-    exit(1);
+	if (!del || !lst)
+		return ;
+	if (lst)
+		del(lst->content);
+	free(lst);
+	lst = NULL;
 }

@@ -30,10 +30,6 @@ void	built_func(char *av, char *av2, char *av3, t_mini *index)
 		ft_exit();
 	if (ft_strcmp(av, "env") == 0)
 		ft_env(index);
-	if (ft_strcmp(av, "export") == 0)
-		ft_export(index, av2);
-	// if (ft_strcmp(av, "unset") == 0)
-	// 	ft_unse
 }
 
 int main(int ac, char **av, char **env)
@@ -46,7 +42,6 @@ int main(int ac, char **av, char **env)
 	i = 0;
 	if (ac == 1)
 	exit(0);
-	index.finde = NULL;
 	index.string = env;
 	built_func(av[1], av[2], av[3], &index);
 	index.str = getenv("PATH");
