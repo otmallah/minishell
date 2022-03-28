@@ -141,7 +141,7 @@ int main(int ac, char **av, char **env)
 				{
 					index.str = ft_getenv("PATH", &index);
 					if (index.str == NULL)
-						printf("command not found:\n");
+						printf("command not found:%s\n", tmp[0]);
 					else
 					{
 						index.tab = ft_split(index.str, ':');
@@ -162,7 +162,7 @@ char *ft_getenv(char *str, t_mini *index)
 	i = 0;
 	while (index->string[i])
 	{
-		puts("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+		//puts("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		temp = ft_substr(index->string[i], 0, find_len3(index->string[i]));
 		if (ft_strcmp(temp, str) == 0)
 			return (ft_strchr(index->string[i], '/'));
