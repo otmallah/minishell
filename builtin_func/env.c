@@ -46,12 +46,15 @@ void    ft_env(t_mini *index, t_idx *id)
 	char **temp;
 
 	puts("hana");
-	index->tab_unset = index->string;
-	printf("%s \n", index->tab_unset[i]);
-	while (index->tab_unset[i])
+	a = tablen1(index->string) - id->poor;
+	printf("a = %d\n", a);
+	//index->tab_unset = index->string;
+	//printf("%s \n", index->tab_unset[i]);
+	while (a > 0)
 	{
-		printf("%s\n", index->tab_unset[i]);
+		printf("%s\n", index->string[i]);
 		i++;
+		a--;
 	}
 	//puts("*-*-**-*-*-*-*-*-*-*-*-*-*-*-*");
 	if (index->env_tab)

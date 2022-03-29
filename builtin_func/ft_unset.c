@@ -61,8 +61,8 @@ void	add_to_f(t_mini *index, t_idx *id, char *str)
 		i--;
 		a++;
 	}
-	//free()
-	index->string = (char **)malloc(sizeof(char *) * (id->b));
+	printf("d == %d\n", id->b);
+	index->string = (char **)calloc(sizeof(char *) , (id->b + 1));
 	i = id->b;
 	j = 0;
 	while (i > 0)
@@ -71,8 +71,10 @@ void	add_to_f(t_mini *index, t_idx *id, char *str)
 		j++;
 		i--;
 	}
-	//printf("st = %s\n", index->string[i]);
-	index->string[i] = NULL;
+	free(temp);
+	puts(" *-*-*-*-**--**-*-*--*-*-* ");
+	//printf("st = %s\n", index->string[j]);
+	index->string[j] = NULL;
 }
 
 //void	//same_in_expor

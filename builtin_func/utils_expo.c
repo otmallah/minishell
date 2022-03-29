@@ -108,6 +108,7 @@ void	add_to_temp(t_mini *index, t_idx *id)
 		j++;
 		i--;
 	}
+	free(temp);
 }
 
 int	find_duplicate(t_mini *index, char *str,t_idx *id)
