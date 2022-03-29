@@ -30,10 +30,6 @@ typedef struct s_idx
 	int	cnt;
 	int	cot;
 	int	poor;
-	int env;
-	int ut_env;
-	int expo;
-	int ut_expo;
 }	t_idx;;
 
 typedef struct s_list {

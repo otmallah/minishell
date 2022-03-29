@@ -17,6 +17,7 @@ int tablen(char **str)
 	int i;
 
 	i = 0;
+	puts("*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*");
 	while (str[i])
 		i++;
 	return i;
@@ -95,13 +96,10 @@ void	ft_unset(t_mini *index, t_idx *id, char *str)
 		i = 0;
 		while (index->env_tab[i])
 		{
-			puts("*-*-*--*-*-*-*-");
+			//printf()
 			temp = ft_substr(index->env_tab[i], 0, findlen(index->env_tab[i]));
-			printf("temp = '%s' && str = '%s' \n", temp, str);
 			if (ft_strcmp(temp, str) == 0)
 			{
-				id->env = tablen(index->env_tab) - id->ut_env;
-				id->ut_env++;
 				add_to_temp_env(index, id, str);
 			}
 			i++;
@@ -112,15 +110,9 @@ void	ft_unset(t_mini *index, t_idx *id, char *str)
 		i = 0;
 		while (index->tab_e[i])
 		{
-			temp = ft_substr(index->tab_e[i], 0, findlen(index->tab_e[i]));
-			if (ft_strcmp(temp, str) == 0)
-			{
-				id->expo = tablen(index->tab_e) - id->ut_expo;
-				id->ut_expo++;
+			if (ft_strcmp(index->tab_e[i], str) == 0)
 				add_to_temp_expo(index, id, str);
-			}
 			i++;
 		}
 	}
-	//printf("%s\n", index->tab_unset[i]);
 }

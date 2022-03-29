@@ -61,8 +61,7 @@ void    add_to_temp_expo(t_mini *index, t_idx *id, char *str)
 	temp = (char **)malloc(sizeof(char *) * id->c);
 	while (i > 0)
 	{
-		temp2 = ft_substr(index->tab_e[j], 0, find_len3(index->tab_e[j]));
-		if (ft_strcmp(temp2, str) == 0)
+		if (ft_strcmp(index->tab_e[j], str) == 0)
 			j++;
 		temp[a] = index->tab_e[j];
 		j++;

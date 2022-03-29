@@ -109,7 +109,7 @@ void	add_to_temp(t_mini *index, t_idx *id)
 		i--;
 	}
 	free(temp);
-	index->env_tab[j] = 0;
+	index->env_tab[j] = NULL;
 }
 
 int	find_duplicate(t_mini *index, char *str,t_idx *id)
@@ -130,10 +130,8 @@ int	find_duplicate(t_mini *index, char *str,t_idx *id)
 		{
 			temp = ft_substr(str, 0, find_len(str));
 			str2 = ft_substr(index->tab_e[j], 0, find_len(index->tab_e[j]));
-            printf("tn = %s && str = %s\n", temp, str2);
 			if (ft_strcmp(temp, str2) == 0)
 			{
-                puts("*-*-*-*-*-*-**-*-*-*-*-");
 				index->tab_e[j] = str;
 				return 1;
 			}

@@ -33,7 +33,7 @@ int		find_in_env_dup(t_mini *index, int id, char *str)
 	a = find_value(str);
 	if (a == 1)
 	{
-		index->tab_exp[id] = str;
+		index->string[id] = str;
 		return (1); 
 	}
 	return (0);
@@ -67,7 +67,6 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 					str_3 = ft_substr(str, 0, find_len(str));
 					if (ft_strcmp(str_2, str_3) == 0)
 					{
-						puts("*-*-*-*-*-*-*haanaa*-*-*-*-*-*-*-*-**-*");
 						find_in_env_dup(index, i, str);
 						a = 2;
 					}
