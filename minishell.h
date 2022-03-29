@@ -30,6 +30,10 @@ typedef struct s_idx
 	int	cnt;
 	int	cot;
 	int	poor;
+	int env;
+	int ut_env;
+	int expo;
+	int ut_expo;
 }	t_idx;;
 
 typedef struct s_list {
@@ -72,3 +76,8 @@ int		find_duplicate(t_mini *index, char *str,t_idx *id);
 void	add_to_temp2(t_mini *index, t_idx *id);
 int		find_value(char *str);
 int		find_len(char *str);
+
+//utils unset
+
+void    add_to_temp_env(t_mini *index, t_idx *id, char *str);
+void    add_to_temp_expo(t_mini *index, t_idx *id, char *str);

@@ -36,34 +36,30 @@ int	findlen(char *str)
 	return 0;
 }
 
-void	add_to_f(t_mini *index, t_idx *id, char *str)
+void	add_to_fun(t_mini *index, t_idx *id, char *str)
 {
-	int i;
-	int j;
-	int a;
-	char **temp;
-	char *temp2;
+	int		i;
+	int		j;
+	int		a;
+	char	**temp;
+	char	*temp2;
 
-	i = id->b;
+	i = id->cot;
 	j = 0;
 	a = 0;
-	temp = (char **)malloc(sizeof(char *) * id->b);
+	temp = (char **)malloc(sizeof(char *) * id->cot);
 	while (i > 0)
 	{
 		temp2 = ft_substr(index->string[j], 0, findlen(index->string[j]));
 		if (ft_strcmp(temp2, str) == 0)
-		{
 			j++;
-		}
 		temp[a] = index->string[j];
-		//printf("temp = %s\n", temp[a]);
 		j++;
 		i--;
 		a++;
 	}
-	printf("d == %d\n", id->b);
-	index->string = (char **)calloc(sizeof(char *) , (id->b + 1));
-	i = id->b;
+	index->string = (char **)calloc(sizeof(char *) , (id->cot + 1));
+	i = id->cot;
 	j = 0;
 	while (i > 0)
 	{
@@ -72,8 +68,6 @@ void	add_to_f(t_mini *index, t_idx *id, char *str)
 		i--;
 	}
 	free(temp);
-	puts(" *-*-*-*-**--**-*-*--*-*-* ");
-	//printf("st = %s\n", index->string[j]);
 	index->string[j] = NULL;
 }
 
@@ -90,24 +84,43 @@ void	ft_unset(t_mini *index, t_idx *id, char *str)
 		temp = ft_substr(index->tab_unset[i], 0, findlen(index->tab_unset[i]));
 		if (ft_strcmp(temp, str) == 0)
 		{
-			id->b = tablen(index->tab_unset) - id->poor;
+			id->cot = tablen(index->tab_unset) - id->poor;
 			id->poor++;
-			add_to_f(index, id, str);
-			//same_in_expor(index, id);
+			add_to_fun(index, id, str);
 		}
 		i++;
 	}
-	//if (index->env_tab)
-	//{
-	//	i = 0;
-	//	while (index->env_tab[i])
-	//	{
-	//		temp = ft_substr(index->env_tab[i], 0, findlen(index->env_tab[i]));
-	//		if (ft_strcmp(temp, str) == 0)
-	//		{
-	//			
-	//		}
-	//	}
-	//}
+	if (index->env_tab)
+	{
+		i = 0;
+		while (index->env_tab[i])
+		{
+			puts("*-*-*--*-*-*-*-");
+			temp = ft_substr(index->env_tab[i], 0, findlen(index->env_tab[i]));
+			printf("temp = '%s' && str = '%s' \n", temp, str);
+			if (ft_strcmp(temp, str) == 0)
+			{
+				id->env = tablen(index->env_tab) - id->ut_env;
+				id->ut_env++;
+				add_to_temp_env(index, id, str);
+			}
+			i++;
+		}
+	}
+	if (index->tab_e)
+	{
+		i = 0;
+		while (index->tab_e[i])
+		{
+			temp = ft_substr(index->tab_e[i], 0, findlen(index->tab_e[i]));
+			if (ft_strcmp(temp, str) == 0)
+			{
+				id->expo = tablen(index->tab_e) - id->ut_expo;
+				id->ut_expo++;
+				add_to_temp_expo(index, id, str);
+			}
+			i++;
+		}
+	}
 	//printf("%s\n", index->tab_unset[i]);
 }

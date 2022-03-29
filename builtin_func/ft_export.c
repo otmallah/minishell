@@ -50,12 +50,12 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 
 	i = 0;
 	j = 0;
-	while (index->tab_exp[i])
+	while (index->string[i])
 	{
 		if (str)
 		{
 			//puts("**-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-			str_2 = ft_substr(index->tab_exp[i], 0, find_len(index->tab_exp[i]));
+			str_2 = ft_substr(index->string[i], 0, find_len(index->string[i]));
 			//printf("s2 = %s \n", str_2);
 			if (ft_strcmp(str, str_2) == 0)
 				a = 2;
@@ -74,7 +74,7 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 				}		
 			}
 		}
-		printf("declare -x %s\n" , index->tab_exp[i]);
+		printf("declare -x %s\n" ,index->string[i]);
 		i++;
 	}
 	j = 0;
@@ -83,8 +83,9 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 		id->c++;
 		if (!index->tab_e)
 		{
-			index->tab_e = (char **)malloc(sizeof(char *) * id->c);
+			index->tab_e = (char **)malloc(sizeof(char *) * (id->c + 1));
 			index->tab_e[id->d] = str;
+			index->tab_e[id->d + 1] = NULL;
 		}
 		else
 		{
@@ -109,13 +110,13 @@ void	ft_print_export(t_mini *index, t_idx *id, char *str)
 
 	i = 0;
 	//puts("**-*-*-*-*-*-*-*-*-*-*-*");
-	while (index->tab_exp[i + 1] != NULL)
+	while (index->string[i + 1] != NULL)
 	{
-		if (ft_strcmp(index->tab_exp[i], index->tab_exp[i + 1]) > 0)
+		if (ft_strcmp(index->string[i], index->string[i + 1]) > 0)
 		{
-			temp = index->tab_exp[i];
-			index->tab_exp[i] = index->tab_exp[i + 1];
-			index->tab_exp[i + 1] = temp;
+			temp = index->string[i];
+			index->string[i] = index->string[i + 1];
+			index->string[i + 1] = temp;
 			i = -1;
 		}
 		i++;
@@ -136,8 +137,9 @@ void	ft_export(t_mini *index, t_idx *id, char *str)
 			if (!index->env_tab)
 			{
 				id->b++;
-				index->env_tab = (char **)malloc(sizeof(char *) * id->b);
+				index->env_tab = (char **)malloc(sizeof(char *) * (id->b + 1));
 				index->env_tab[id->a] = str;
+				index->env_tab[id->a + 1] = NULL;
 			}
 			else
 			{

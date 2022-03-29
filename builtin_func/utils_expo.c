@@ -99,7 +99,7 @@ void	add_to_temp(t_mini *index, t_idx *id)
 		j++;
 		i--;
 	}
-	index->env_tab = (char **)malloc(sizeof(char *) * id->b);
+	index->env_tab = (char **)malloc(sizeof(char *) * (id->b + 1));
 	i = id->a;
 	j = 0;
 	while (i >= 0)
@@ -109,6 +109,7 @@ void	add_to_temp(t_mini *index, t_idx *id)
 		i--;
 	}
 	free(temp);
+	index->env_tab[j] = 0;
 }
 
 int	find_duplicate(t_mini *index, char *str,t_idx *id)
@@ -162,7 +163,7 @@ void	add_to_temp2(t_mini *index, t_idx *id)
 		j++;
 		i--;
 	}
-	index->tab_e = (char **)malloc(sizeof(char *) * id->c);
+	index->tab_e = (char **)malloc(sizeof(char *) * (id->c + 1));
 	j = 0;
 	i = id->d;
 	while (i >= 0)
@@ -171,4 +172,6 @@ void	add_to_temp2(t_mini *index, t_idx *id)
 		j++;
 		i--;
 	}
+	free(temp);
+	index->tab_e[j] = NULL;
 }

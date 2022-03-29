@@ -93,6 +93,10 @@ int main(int ac, char **av, char **env)
 	id.a = 0;
 	id.b = 0;
 	id.d = 0;
+	id.env = 0;
+	id.expo = 0;
+	id.ut_env = 1;
+	id.ut_expo = 1;
 	id.poor = 1;
 	id.cot = 0;
 	list = NULL;
