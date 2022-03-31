@@ -1,3 +1,5 @@
+#include "pipe.h"
+
 typedef	struct s_solo {
 	char **string;
 	char	**tab;
@@ -48,29 +50,24 @@ int main(int ac, char **av ,char **env)
 	int id = fork();
 	if (id == 0)
 	{
-		close (fd[0]);
+		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		find_path(av[1], &index);
 	}
-	else
+	wait(NULL);
+	close(fd[1]);
+	// read(fd[0], buff, sizeof(buff));
+	// write(fds, buff, sizeof(buff));
+	id = fork();
+	if (id == 0)
 	{
-		close(fd[1]);
-		read(fd[0], buff, sizeof(buff));
-		write(fds, buff, sizeof(buff));
-		wait(NULL);
-		if (fork() == 0)
-		{
-			//close(fd[1]);
-			dup2(fd[0], 0);
-			dup2(fds, 1);
-			find_path(av[3], &index);
-		}
-		else
-		{
-			close(fd[1]);
-			waitpid(-1, &status, 0);
-			read(fd[0], buff, sizeof(buff));
-			printf("bf = %s\n", buff);
-		}
+		dup2(fd[0], 0);
+		dup2(fds, 1);
+		find_path(av[2], &index);
 	}
+	wait(NULL);
+	close(fd[1]);
+	close(fd[0]);
+	close(fds);
+	//printf("bf = %s\n", buff);
 }

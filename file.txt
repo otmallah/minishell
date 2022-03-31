@@ -1,0 +1,3 @@
+/Users/otmallah/Desktop/minishell
+/Users/otmallah/Desktop/minishell
+s000    0:00.00 ./a.out ls ps
