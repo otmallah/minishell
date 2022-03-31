@@ -34,12 +34,24 @@ void	find_path(char *str, t_solo *index)
 
 }
 
+int	find_len(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return i;
+}
+
 int main(int ac, char **av ,char **env)
 {
 	int fd[2];
 	int fds;
-	int status;
-	char buff[256];
+	int a;
+	int i;
+	int id;
+	char **tab;
 	char *str[] = {av[1], NULL};
 	t_solo index;
 
@@ -47,25 +59,53 @@ int main(int ac, char **av ,char **env)
 		return 1;
 	fds = open("file.txt", O_CREAT | O_RDWR, 0777);
 	index.string = env;
-	int id = fork();
-	if (id == 0)
+	tab = ft_split(av[1], '|');
+	a = find_len(tab);
+	i = 0;
+	while (i < a)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		find_path(av[1], &index);
+		if (i == 0)
+		{
+			id = fork();
+			if (id == 0)
+			{
+				close(fd[0]);
+				dup2(fd[1], STDOUT_FILENO);
+				dup2(0, STDIN_FILENO);
+				find_path(tab[i], &index);
+			}
+			wait(NULL);
+		}
+		else if (i == (a - 1))
+		{
+			//puts("hana");
+			wait(NULL);
+			close(fd[1]);
+			close(fd[0]);
+			id = fork();
+			if (id == 0)
+			{
+				dup2(1, STDOUT_FILENO);
+				dup2(fd[0], STDIN_FILENO);
+				find_path(tab[i], &index);
+			}
+			wait(NULL);
+		}
+		else
+		{
+			close(fd[1]);
+			id = fork();
+			if (id == 0)
+			{
+				dup2(fd[0], STDIN_FILENO);
+				dup2(fd[1], STDOUT_FILENO);
+				find_path(tab[i], &index);
+			}
+			wait(NULL);
+		}
+		i++;
 	}
-	wait(NULL);
-	close(fd[1]);
-	id = fork();
-	if (id == 0)
-	{
-		dup2(fd[0], 0);
-		dup2(fds, 1);
-		find_path(av[2], &index);
-	}
-	wait(NULL);
 	close(fd[1]);
 	close(fd[0]);
 	close(fds);
-	//printf("bf = %s\n", buff);
 }
