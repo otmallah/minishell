@@ -36,26 +36,41 @@ int main(int ac, char **av ,char **env)
 {
 	int fd[2];
 	int fds;
+	int status;
 	char buff[256];
 	char *str[] = {av[1], NULL};
 	t_solo index;
 
 	if (pipe(fd) == -1)
 		return 1;
-	//write (fds, "ksjdnckjndscjnsdkcnskjdc", 24);
-	fds = open("file.txt", O_CREAT | O_RDWR);
+	fds = open("file.txt", O_CREAT | O_RDWR, 0777);
 	index.string = env;
 	int id = fork();
 	if (id == 0)
 	{
+		close (fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		find_path(av[1], &index);
 	}
 	else
 	{
+		close(fd[1]);
 		read(fd[0], buff, sizeof(buff));
 		write(fds, buff, sizeof(buff));
-		//printf("%s \n", buff);
 		wait(NULL);
+		if (fork() == 0)
+		{
+			//close(fd[1]);
+			dup2(fd[0], 0);
+			dup2(fds, 1);
+			find_path(av[3], &index);
+		}
+		else
+		{
+			close(fd[1]);
+			waitpid(-1, &status, 0);
+			read(fd[0], buff, sizeof(buff));
+			printf("bf = %s\n", buff);
+		}
 	}
 }
