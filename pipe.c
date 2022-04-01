@@ -60,12 +60,19 @@ int main(int ac, char **av ,char **env)
 	if (id == 0)
 	{
 		dup2(fd[0], 0);
-		dup2(fds, 1);
 		find_path(av[2], &index);
 	}
 	wait(NULL);
-	close(fd[1]);
 	close(fd[0]);
+	id = fork();
+	if (id == 0)
+	{
+		dup2(fd[0], 0);
+		dup2(1, 1);
+		find_path(av[3], &index);
+	}
+	wait(NULL);
+	close(fd[0]);
+	close(fd[1]);
 	close(fds);
-	//printf("bf = %s\n", buff);
 }
