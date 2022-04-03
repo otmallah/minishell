@@ -21,6 +21,13 @@ typedef struct s_minishell
 	int 	count2;
 }	t_mini;
 
+typedef struct s_pipe 
+{
+	char **tab;
+	char *str;
+	char **string;
+}	t_pipe;
+
 typedef struct s_idx
 {
 	int	a;
@@ -45,13 +52,12 @@ char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_pwd(void);
 void    ft_cd(char *path);
 char	*ft_strchr(const char *str, int c);
-void    ft_exit(void);
+void    ft_exit(t_mini *index);
 void    ft_env(t_mini *index, t_idx *id);
 void	ft_echo(char *str);
 void	ft_export(t_mini *index, t_idx *id, char *str);
 void	ft_print_export(t_mini *index, t_idx *id, char *str);
 void	ft_unset(t_mini *index, t_idx *id, char *str);
-void	ft_exit(void);
 
 // utils
 
@@ -72,8 +78,14 @@ int		find_duplicate(t_mini *index, char *str,t_idx *id);
 void	add_to_temp2(t_mini *index, t_idx *id);
 int		find_value(char *str);
 int		find_len(char *str);
+int    find_space(char *str);
 
 //utils unset
 
 void    add_to_temp_env(t_mini *index, t_idx *id, char *str);
 void    add_to_temp_expo(t_mini *index, t_idx *id, char *str);
+
+//pipe
+
+int ft_pipe(t_mini	*index, t_pipe *pipex);
+char *ft_getenv(char *str, t_mini *index);

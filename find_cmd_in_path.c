@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   find_cmd_in_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 21:10:58 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 21:10:59 by otmallah         ###   ########.fr       */
+/*   Created: 2022/04/01 15:01:44 by otmallah          #+#    #+#             */
+/*   Updated: 2022/04/01 15:01:47 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 
-void    ft_exit(t_mini *index)
+#include "minishell.h"
+
+char *ft_getenv(char *str, t_mini *index)
 {
-    //free(index->tab_e);
-    //free(index->env_tab);
-    //free(index->tab_exp);
-    printf("exit\n");
-    exit(1);
+	int i;
+	char *temp;
+
+	i = 0;
+	while (index->string[i])
+	{
+		temp = ft_substr(index->string[i], 0, find_len3(index->string[i]));
+		if (ft_strcmp(temp, str) == 0)
+			return (ft_strchr(index->string[i], '/'));
+		i++;
+	}
+	return NULL;
 }

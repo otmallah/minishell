@@ -36,43 +36,50 @@ void	find_path(char *str, t_solo *index)
 
 int main(int ac, char **av ,char **env)
 {
-	int fd[2];
+	int fd[3][2];
 	int fds;
 	int status;
 	char buff[256];
 	char *str[] = {av[1], NULL};
 	t_solo index;
 
-	if (pipe(fd) == -1)
-		return 1;
-	fds = open("file.txt", O_CREAT | O_RDWR, 0777);
+	int i = 0;
+	while (i < 2)
+	{
+		if (pipe(fd[i]) < 0)
+			return 1;
+		i++;
+	}
 	index.string = env;
 	int id = fork();
 	if (id == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
+		dup2(fd[0][1], STDOUT_FILENO);
+		dup2(fd[0][0], STDIN_FILENO);
 		find_path(av[1], &index);
 	}
-	wait(NULL);
-	close(fd[1]);
+	dup2(fd[0][0], STDIN_FILENO);
+	close(fd[0][1]);
 	id = fork();
 	if (id == 0)
 	{
-		dup2(fd[0], 0);
+		close(fd[1][1]);
+		dup2(fd[0][0], STDIN_FILENO);
+		dup2(fd[1][0], 0);
 		find_path(av[2], &index);
 	}
-	wait(NULL);
-	close(fd[0]);
+	dup2(fd[1][0], STDIN_FILENO);
+	close(fd[1][1]);
 	id = fork();
 	if (id == 0)
 	{
-		dup2(fd[0], 0);
-		dup2(1, 1);
+		close(fd[2][1]);
+		dup2(fd[2][0], 0);
 		find_path(av[3], &index);
 	}
-	wait(NULL);
-	close(fd[0]);
-	close(fd[1]);
-	close(fds);
+	//wait(NULL);
+	while ( wait(NULL) != -1 );
+	//close(fd[1]);
+	//close(fd[0]);
+	//close(fds);
 }

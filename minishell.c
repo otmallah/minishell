@@ -49,7 +49,7 @@ void    func_all(t_mini *index, char *str)
 		}
 		i++;
 	}
-	printf("command not found:%s\n", test[0]);
+	printf("command not found22:%s\n", test[0]);
 }
 
 int    find_space(char *str)
@@ -66,12 +66,31 @@ int    find_space(char *str)
 	return 2;
 }
 
+int		find_pipe(char *str)
+{
+	int i;
 
-//void handler(int sig)
-//{
-//	if (sig == 2)
-//		printf("hana hh\n");
-//}
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+void	check_pipe(t_pipe *pipe, t_mini *index, t_idx *id, char *str)
+{
+	int a;
+
+	a = find_pipe(str);
+	if (a == 1)
+	{
+		pipe->tab = ft_split(str, '|');
+		ft_pipe(index, pipe);
+	}
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -80,8 +99,8 @@ int main(int ac, char **av, char **env)
 	char *str;
 	int a = 0;
 	char **tmp;
-	t_list *list;
-	t_list *list2;
+	int	space;
+	t_pipe pipe;
 
 	index.count2 = 0;
 	index.finde = NULL;
@@ -95,45 +114,50 @@ int main(int ac, char **av, char **env)
 	id.d = 0;
 	id.poor = 1;
 	id.cot = 0;
-	list = NULL;
-	list2 = NULL;
 	while (1)
 	{
-		//signal(SIGINT, handler);
 		str = readline("minishell >$ ");
-		//signal(SIGINT, handler);
 		if (str)
 		{
 			add_history(str);
+			check_pipe(&pipe, &index, &id, str);
 			a = find_space(str);
 			if (a == 1)
-				tmp = ft_split(str, ' ');
+			{
+				pipe.tab = ft_split(str, ' ');
+				space = 1;
+			}
 			else
 			{
-				tmp = (char **)malloc(sizeof(char *));
-				tmp[0] = str;
+				pipe.tab = (char **)malloc(sizeof(char *));
+				pipe.tab[0] = str;
+				space = 0;
 			}
-			if (ft_strcmp(tmp[0] , "echo") == 0  && ft_strcmp(tmp[1] , "-n") == 0)
-				built_func(tmp[2]);
-			else if (ft_strcmp(tmp[0], "env") == 0)
+			if (ft_strcmp(pipe.tab[0] , "echo") == 0  && ft_strcmp(pipe.tab[1] , "-n") == 0)
+				built_func(pipe.tab[2]);
+			else if (ft_strcmp(pipe.tab[0], "env") == 0)
 				ft_env(&index, &id);
-			else if (ft_strcmp(tmp[0], "pwd") == 0)
+			else if (ft_strcmp(pipe.tab[0], "pwd") == 0)
 				ft_pwd();
-			else if (ft_strcmp(tmp[0], "cd") == 0)
-				ft_cd(tmp[1]);
-		   	else if (ft_strcmp(tmp[0], "export") == 0)
+			else if (ft_strcmp(pipe.tab[0], "cd") == 0)
+			{
+				if (space == 1)
+				{
+					ft_cd(pipe.tab[1]);
+				}
+			}
+			else if (ft_strcmp(pipe.tab[0], "export") == 0)
 		   	{
 				if (a == 1)
-		   			ft_export(&index, &id, tmp[1]);
+		   			ft_export(&index, &id, pipe.tab[1]);
 				else
 				   ft_export(&index, &id, NULL);
 			}
-			else if (ft_strcmp(tmp[0], "exit") == 0)
-				ft_exit();
-			else if (ft_strcmp(tmp[0], "unset") == 0)
+			else if (ft_strcmp(pipe.tab[0], "exit") == 0)
+				ft_exit(&index);
+			else if (ft_strcmp(pipe.tab[0], "unset") == 0)
 			{
-				if (tmp[1])
-					ft_unset(&index, &id, tmp[1]);
+				ft_unset(&index, &id, pipe.tab[1]);
 			}
 			else
 			{
@@ -141,7 +165,7 @@ int main(int ac, char **av, char **env)
 				{
 					index.str = ft_getenv("PATH", &index);
 					if (index.str == NULL)
-						printf("command not found:%s\n", tmp[0]);
+						printf("command not found:%s\n", pipe.tab[0]);
 					else
 					{
 						index.tab = ft_split(index.str, ':');
@@ -154,19 +178,3 @@ int main(int ac, char **av, char **env)
 	}
 }
 
-char *ft_getenv(char *str, t_mini *index)
-{
-	int i;
-	char *temp;
-
-	i = 0;
-	while (index->string[i])
-	{
-		//puts("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-		temp = ft_substr(index->string[i], 0, find_len3(index->string[i]));
-		if (ft_strcmp(temp, str) == 0)
-			return (ft_strchr(index->string[i], '/'));
-		i++;
-	}
-	return NULL;
-}
