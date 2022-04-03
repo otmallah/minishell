@@ -14,7 +14,7 @@ int	find_space2(char *tab)
 	return 0;
 }
 
-void	find_path(char *str, t_pipe *index)
+void	find_path(char *str, t_pipe *index, t_mini *id)
 {
 	int i;
 	int a;
@@ -34,6 +34,7 @@ void	find_path(char *str, t_pipe *index)
 		tep = (char **)malloc(sizeof(char *));
 		tep[0] = str;
 	}
+	check_cmd_if_built_func(id, tep);
 	while (index->tab[i])
 	{
 		a = ft_strlen(index->tab[i]);
@@ -59,11 +60,18 @@ int	find_len4(char **tab)
 	return i;
 }
 
+void	check_cmd_if_built_func(t_mini *index, char **str)
+{
+	if (ft_strcmp(str[0], "export"))
+}
+
 int ft_pipe(t_mini *index, t_pipe *pipx)
 {
 	int fd[2];
+	char *str;
 	int a;
 	int i;
+	int sp;
 	int id;
 
 	a = find_len4(pipx->tab);
@@ -78,29 +86,50 @@ int ft_pipe(t_mini *index, t_pipe *pipx)
 		{
 			if (i == 0)
 			{
-				close(fd[0]);
-				//printf("tab = %s\n", tab[i]);
-				dup2(0, 0);
-				dup2(fd[1], STDOUT_FILENO);
-				find_path(pipx->tab[i], pipx);
+				check_cmd_if_built_func()
+				str = ft_getenv("PATH", index);
+				if (str == NULL)
+				{
+					printf("command not found:%s\n", pipx->tab[i]);
+					break ;
+				}
+				else
+				{
+					close(fd[0]);
+					dup2(0, 0);
+					dup2(fd[1], STDOUT_FILENO);
+					find_path(pipx->tab[i], pipx , index);
+				}
 				//dup2(0, fd[0]);
 			}
 			else if (i == (a - 1))
 			{
-				close(fd[0]);
-				close(fd[1]);
-				dup2(ff, STDIN_FILENO);
-				dup2(1, 1);
-				find_path(pipx->tab[i], pipx);
+				str = ft_getenv("PATH", index);
+				if (str == NULL)
+				{
+					printf("command not found:%s\n", pipx->tab[i]);
+				}
+				else
+				{
+					close(fd[0]);
+					close(fd[1]);
+					dup2(ff, STDIN_FILENO);
+					dup2(1, 1);
+					find_path(pipx->tab[i], pipx , index);
+				}
 			}
 			else
 			{
-				//printf("%s\n", tab[i]);
-				close(fd[0]);
-				dup2(ff, STDIN_FILENO);
-				dup2(fd[1], STDOUT_FILENO);
-				find_path(pipx->tab[i], pipx);
-				//dup2(0, fd[0]);
+				str = ft_getenv("PATH", index);
+				if (str == NULL)
+					printf("command not found:%s\n", pipx->tab[i]);
+				else
+				{
+					close(fd[0]);
+					dup2(ff, STDIN_FILENO);
+					dup2(fd[1], STDOUT_FILENO);
+					find_path(pipx->tab[i], pipx , index);
+				}
 			}
 		}
 		ff = dup(fd[0]);
