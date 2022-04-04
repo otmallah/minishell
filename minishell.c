@@ -20,7 +20,7 @@ void	built_func(char *av)
 
 int    find_space(char *str);
 
-void    func_all(t_mini *index, char *str)
+void	func_all(t_idx *id, t_mini *index, char *str)
 {
 	int i;
 	int a;
@@ -30,6 +30,7 @@ void    func_all(t_mini *index, char *str)
 
 	i = 0;
 	res = find_space(str);
+	index->tab = ft_split(index->str, ':');
 	if (res == 1)
 		test = ft_split(str, ' ');
 	else
@@ -88,7 +89,7 @@ void	check_pipe(t_pipe *pipe, t_mini *index, t_idx *id, char *str)
 	if (a == 1)
 	{
 		pipe->tab = ft_split(str, '|');
-		ft_pipe(index, pipe);
+		ft_pipe(index, pipe, id);
 	}
 }
 
@@ -121,6 +122,8 @@ int main(int ac, char **av, char **env)
 		{
 			add_history(str);
 			check_pipe(&pipe, &index, &id, str);
+			ft_redirections(&index, &id, &pipe, str);
+			//break ;
 			a = find_space(str);
 			if (a == 1)
 			{
@@ -168,8 +171,8 @@ int main(int ac, char **av, char **env)
 						printf("command not found:%s\n", pipe.tab[0]);
 					else
 					{
-						index.tab = ft_split(index.str, ':');
-						func_all(&index, str);
+						//index.tab = ft_split(index.str, ':');
+						func_all(&id, &index, str);
 					}
 				}
 				wait(NULL); // hadi bach itsana hta isali childe 3ad i trunna parent

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 21:12:10 by otmallah          #+#    #+#             */
+/*   Updated: 2022/04/04 21:12:12 by otmallah         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int find_red(char *str)
@@ -11,9 +23,10 @@ int find_red(char *str)
             return 1;
         i++;
     }
+	return 0;
 }
 
-int	find_space2(char *tab)
+int	find_space5(char *tab)
 {
 	int i;
 
@@ -27,7 +40,7 @@ int	find_space2(char *tab)
 	return 0;
 }
 
-void	find_path(char *str, t_pipe *index, t_mini *id)
+void	find_path_red(char *str, t_pipe *index, t_mini *id)
 {
 	int i;
 	int a;
@@ -37,7 +50,7 @@ void	find_path(char *str, t_pipe *index, t_mini *id)
 	i = 0;
 	temp = getenv("PATH");
 	index->tab = ft_split(temp, ':');
-	int res = find_space2(str);
+	int res = find_space5(str);
 	if (res == 1)
 	{
 		tep = ft_split(str, ' ');
@@ -62,21 +75,23 @@ void	find_path(char *str, t_pipe *index, t_mini *id)
 	}
 }
 
-int main(int ac, char **av)
+void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 {
-    char *str;
     int a;
+	int ID_FOR;
     char **tab;
-    t_mini index;
-    t_idx id;
-    t_pipe pipx;
 
-    a = find_red(av[1]);
-    if (a == 1)
+    a = find_red(str);
+    if (a == 1) 
     {
-        tab = ft_split(av[1], '>');
-        int fd = open(tab[1], O_CREAT | O_RDWR);
-        dup2(fd, STDOUT_FILENO);
-        find_path(tab[0], &pipx, &index);
+        tab = ft_split(str, '>');
+        int fd = open(tab[1], O_CREAT | O_RDWR , 0777);
+		ID_FOR = fork();
+		if (ID_FOR == 0)
+		{
+        	dup2(fd, STDOUT_FILENO);
+        	find_path_red(tab[0], pipx, index);
+		}
+		wait(NULL);
     }
-}%  
+}

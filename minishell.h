@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -87,5 +88,10 @@ void    add_to_temp_expo(t_mini *index, t_idx *id, char *str);
 
 //pipe
 
-int ft_pipe(t_mini	*index, t_pipe *pipex);
-char *ft_getenv(char *str, t_mini *index);
+int		ft_pipe(t_mini *index, t_pipe *pipx, t_idx *idx);
+void	func_all(t_idx *id, t_mini *index, char *str);
+char	*ft_getenv(char *str, t_mini *index);
+
+//redirections
+
+void		ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str);
