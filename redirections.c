@@ -1,0 +1,82 @@
+#include "minishell.h"
+
+int find_red(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '>')
+            return 1;
+        i++;
+    }
+}
+
+int	find_space2(char *tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if(tab[i] == ' ')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+void	find_path(char *str, t_pipe *index, t_mini *id)
+{
+	int i;
+	int a;
+	char *temp;
+	char **tep;
+
+	i = 0;
+	temp = getenv("PATH");
+	index->tab = ft_split(temp, ':');
+	int res = find_space2(str);
+	if (res == 1)
+	{
+		tep = ft_split(str, ' ');
+	}
+	else
+	{
+		tep = (char **)malloc(sizeof(char *));
+		tep[0] = str;
+	}
+	//check_cmd_if_built_func(id, tep);
+	while (index->tab[i])
+	{
+		a = ft_strlen(index->tab[i]);
+		index->tab[i][a] = '/'; // bach tkoun lpath kamla n '/'
+		index->tab[i][a + 1] = '\0'; // bach nsali string
+		index->str = ft_strjoin(index->tab[i], tep[0]);
+		if (access(index->str, F_OK) == 0)
+		{
+			execve(index->str, &tep[0], index->string);
+		}
+		i++;
+	}
+}
+
+int main(int ac, char **av)
+{
+    char *str;
+    int a;
+    char **tab;
+    t_mini index;
+    t_idx id;
+    t_pipe pipx;
+
+    a = find_red(av[1]);
+    if (a == 1)
+    {
+        tab = ft_split(av[1], '>');
+        int fd = open(tab[1], O_CREAT | O_RDWR);
+        dup2(fd, STDOUT_FILENO);
+        find_path(tab[0], &pipx, &index);
+    }
+}%  
