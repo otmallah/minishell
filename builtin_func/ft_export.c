@@ -73,12 +73,14 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 				}		
 			}
 		}
-		printf("declare -x %s\n" ,index->string[i]);
+		if (!str)
+			printf("declare -x %s\n" ,index->string[i]);
 		i++;
 	}
 	j = 0;
 	if (str != NULL && a != 2)
 	{
+		puts("*-*-*-*-*-*-*");
 		id->c++;
 		if (!index->tab_e)
 		{
@@ -97,7 +99,7 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 			}
 		}
 	}
-	if (index->tab_e)
+	if (index->tab_e && !str)
 		ft_print_temp(index->tab_e, id);
 }
 

@@ -84,14 +84,33 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
     a = find_red(str);
     if (a == 1) 
     {
-        tab = ft_split(str, '>');
-        int fd = open(tab[1], O_CREAT | O_RDWR , 0777);
-		ID_FOR = fork();
-		if (ID_FOR == 0)
+		if (str[0] == '>')
 		{
-        	dup2(fd, STDOUT_FILENO);
-        	find_path_red(tab[0], pipx, index);
+			tab = ft_split(str, '>');
+			int fd = open(tab[0], O_CREAT | O_RDWR , 0777);
+			dup2(fd, STDOUT_FILENO);
 		}
-		wait(NULL);
+		else
+		{
+        	tab = ft_split(str, '>');
+        	int fd = open(tab[1], O_CREAT | O_RDWR , 0777);
+			if (ft_strcmp(tab[0], "export") == 0)
+			{
+				dup2(fd, STDOUT_FILENO);
+				ft_export(index, id, NULL);
+				dup2(STDOUT_FILENO, fd);
+				close(fd);
+			}
+			else
+			{
+				ID_FOR = fork();
+				if (ID_FOR == 0)
+				{
+        			dup2(fd, STDOUT_FILENO);
+        			find_path_red(tab[0], pipx, index);
+				}
+				wait(NULL);
+			}
+		}
     }
 }
