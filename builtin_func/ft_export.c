@@ -80,7 +80,6 @@ void	ft_print(t_mini *index, char *str, t_idx *id)
 	j = 0;
 	if (str != NULL && a != 2)
 	{
-		puts("*-*-*-*-*-*-*");
 		id->c++;
 		if (!index->tab_e)
 		{

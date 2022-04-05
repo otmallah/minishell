@@ -80,6 +80,7 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
     int a;
 	int ID_FOR;
     char **tab;
+	char *TEMP;
 
     a = find_red(str);
     if (a == 1) 
@@ -88,7 +89,14 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 		{
 			tab = ft_split(str, '>');
 			int fd = open(tab[0], O_CREAT | O_RDWR , 0777);
-			dup2(fd, STDOUT_FILENO);
+			while (1)
+			{
+				TEMP = readline("");
+				if (ft_strcmp(TEMP, "stop") == 0)
+					break ;
+				write (fd, TEMP, ft_strlen(TEMP));
+				write (fd, "\n", 1);
+			}
 		}
 		else
 		{
