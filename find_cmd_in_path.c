@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_in_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 15:01:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/01 15:01:47 by otmallah         ###   ########.fr       */
+/*   Created: 2022/04/06 17:43:43 by otmallah          #+#    #+#             */
+/*   Updated: 2022/04/06 17:44:04 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 

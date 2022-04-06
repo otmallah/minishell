@@ -123,7 +123,6 @@ int main(int ac, char **av, char **env)
 			add_history(str);
 			check_pipe(&pipe, &index, &id, str);
 			ft_redirections(&index, &id, &pipe, str);
-			//break ;
 			a = find_space(str);
 			if (a == 1)
 			{
