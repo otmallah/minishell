@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 21:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/05 22:17:37 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:58:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 				ID_FOR = fork();
 				if (ID_FOR == 0)
 				{
+					printf("%d\n", FD_TE);
+					dup2(FD_TE, STDIN_FILENO);
         			dup2(fd, STDOUT_FILENO);
-        			find_path_red(tab[0], pipx, index);
+					find_path_red(tab[0], pipx, index);
 				}
 				wait(NULL);
 			}

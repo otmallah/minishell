@@ -7,6 +7,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+int FD_TE;
+
 typedef struct s_minishell
 {
 	int		cnt;
@@ -94,4 +96,6 @@ char	*ft_getenv(char *str, t_mini *index);
 
 //redirections
 
-void		ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str);
+void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str);
+void	find_path_red(char *str, t_pipe *index, t_mini *id);
+void    ft_heredoce(t_mini *index, t_idx *id, t_pipe *pipx, char *str);
