@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 21:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/07 16:58:05 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/04/08 01:03:01 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 		if (str[0] == '>')
 		{
 			tab = ft_split(str, '>');
-			int fd = open(tab[0], O_CREAT | O_RDWR , 0777);
 			while (1)
 			{
 				TEMP = readline("");
 				if (ft_strcmp(TEMP, "stop") == 0)
 					break ;
+				int fd = open(tab[0], O_CREAT | O_RDWR , 0777);
 				write (fd, TEMP, ft_strlen(TEMP));
 				write (fd, "\n", 1);
 			}

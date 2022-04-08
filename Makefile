@@ -4,5 +4,5 @@ all :
 	builtin_func/ft_change_dir.c link/ft_lstnew.c  link/ft_lstlast.c link/ft_lstadd_back.c \
 	builtin_func/ft_pwd.c builtin_func/ft_export.c link/ft_lstadd_front.c utils/ft_strrchr.c \
 	builtin_func/ft_unset.c builtin_func/ft_exit.c link/ft_lstclear.c builtin_func/utils_expo.c \
-	builtin_func/utils_unset.c pipe2.c redirections.c heredoc.c \
+	builtin_func/utils_unset.c pipe2.c redirections.c heredoc.c  \
 	find_cmd_in_path.c -g -fsanitize=address  -lreadline -o minishell

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:35:39 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/07 16:56:31 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:56:56 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void    ft_heredoce(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 	{
 		tab = ft_split(str, ' ');
 		FD_TE = open("he", O_CREAT | O_RDWR , 0777);
-		printf("fd = %d\n", FD_TE);
 		while (1)
 		{
 			str_read = readline(">");
@@ -49,6 +48,12 @@ void    ft_heredoce(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 			write(FD_TE, str_read, strlen(str_read));
 			write(FD_TE, "\n", 1);
 		}
+		//a = find_pipe(tab[3]);
+		//if (a == 1)
+		//{
+		//	pipx->tab = ft_split(tab[3], '|');
+		//	ft_pipe(index, pipx, id);
+		//}
 		sec_tab = ft_strjoin(tab[2], tab[3]);
 		sec_tab = ft_strjoin(sec_tab, tab[4]);
 		ft_redirections(index, id, pipx, sec_tab);

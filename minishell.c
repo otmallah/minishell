@@ -122,8 +122,8 @@ int main(int ac, char **av, char **env)
 		{
 			add_history(str);
 			//check_pipe(&pipe, &index, &id, str);
-			//ft_redirections(&index, &id, &pipe, str);
-			ft_heredoce(&index, &id, &pipe, str);
+			ft_redirections(&index, &id, &pipe, str);
+			//ft_heredoce(&index, &id, &pipe, str);
 			a = find_space(str);
 			if (a == 1)
 			{
