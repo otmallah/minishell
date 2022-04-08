@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 21:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/08 01:03:01 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:05:54 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	find_path_red(char *str, t_pipe *index, t_mini *id)
 		tep = (char **)malloc(sizeof(char *));
 		tep[0] = str;
 	}
-	//check_cmd_if_built_func(id, tep);
 	while (index->tab[i])
 	{
 		a = ft_strlen(index->tab[i]);
@@ -114,7 +113,7 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 				ID_FOR = fork();
 				if (ID_FOR == 0)
 				{
-					printf("%d\n", FD_TE);
+					//printf("%d\n", FD_TE);
 					dup2(FD_TE, STDIN_FILENO);
         			dup2(fd, STDOUT_FILENO);
 					find_path_red(tab[0], pipx, index);
