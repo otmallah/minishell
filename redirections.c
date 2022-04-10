@@ -19,6 +19,8 @@ int find_red(char *str)
     i = 0;
     while (str[i])
     {
+		if (str[i] == '>' && str[i + 1] == '>')
+			return 2;
         if (str[i] == '>')
             return 1;
         i++;
@@ -79,48 +81,44 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
     int a;
 	int ID_FOR;
     char **tab;
-	char *TEMP;
 	int fd = 0;
 
+	if (str[0] == '>' && str[1] != '>')
+	{
+		tab = ft_split(str, '>');
+		fd = open(tab[0], O_CREAT | O_RDWR , 0777);
+	}
+	else if (str[0] == '>' && str[1] == '>')
+	{
+		tab = ft_split(str, '>');
+		fd = open(tab[0], O_CREAT | O_RDWR , 0777);
+	}
     a = find_red(str);
-    if (a == 1) 
-    {
-		if (str[0] == '>')
+	if (a == 2)
+	{
+		tab = ft_split(str, '>');
+		fd = open(tab[1], O_CREAT | O_RDWR | O_APPEND , 0777);
+		ID_FOR = fork();
+		if (ID_FOR == 0)
 		{
-			tab = ft_split(str, '>');
-			while (1)
-			{
-				TEMP = readline("");
-				if (ft_strcmp(TEMP, "stop") == 0)
-					break ;
-				if (fd == 0)
-					fd = open(tab[0], O_CREAT | O_RDWR , 0777);
-				write (fd, TEMP, ft_strlen(TEMP));
-				write (fd, "\n", 1);
-			}
+			dup2(fd, STDOUT_FILENO);
+			find_path_red(tab[0], pipx, index);
 		}
-		else
+		wait(NULL);
+		//close(fd);
+	}
+	else
+	{
+    	tab = ft_split(str, '>');
+        fd = open(tab[1], O_CREAT | O_WRONLY, 0777);
+		ID_FOR = fork();
+		if (ID_FOR == 0)
 		{
-        	tab = ft_split(str, '>');
-        	int fd = open(tab[1], O_CREAT | O_WRONLY);
-			if (ft_strcmp(tab[0], "export") == 0)
-			{
-				dup2(fd, STDOUT_FILENO);
-				ft_export(index, id, NULL);
-				dup2(STDOUT_FILENO, fd);
-				close(fd);
-			}
-			else
-			{
-				ID_FOR = fork();
-				if (ID_FOR == 0)
-				{
-					dup2(0, STDIN_FILENO);
-        			dup2(fd, STDOUT_FILENO);
-					find_path_red(tab[0], pipx, index);
-				}
-				wait(NULL);
-			}
+			dup2(0, STDIN_FILENO);
+        	dup2(fd, STDOUT_FILENO);
+			find_path_red(tab[0], pipx, index);
 		}
-    }
+		wait(NULL);
+		close(fd);
+	}
 }
