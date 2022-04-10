@@ -106,6 +106,26 @@ void	find_heredoc2(t_pipe *pipx, t_mini *index, t_idx *id)
 	}
 }
 
+void	find_redirection(t_mini *index, t_idx *id, t_pipe *pipx)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (pipx->tab[i])
+	{
+		while (pipx->tab[i][j])
+		{
+			if (pipx->tab[i][j] == '>')
+				ft_redirections(index, id, pipx, pipx->tab[i]);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+}
+
 int ft_pipe(t_mini *index, t_pipe *pipx, t_idx *idx)
 {
 	int fd[2];
@@ -117,6 +137,7 @@ int ft_pipe(t_mini *index, t_pipe *pipx, t_idx *idx)
 	int pid[100];
 
 	find_heredoc2(pipx, index, idx);
+	find_redirection(index, idx, pipx);
 	a = find_len5(pipx->tab);
 	i = 0;
 	int ff = 0;
@@ -154,7 +175,6 @@ int ft_pipe(t_mini *index, t_pipe *pipx, t_idx *idx)
 		ff = dup(fd[0]);
 		close(fd[0]);
 		close(fd[1]);
-		// wait(NULL);
 		i++;
 	}
 	while (--i >= 0)
