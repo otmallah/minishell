@@ -93,16 +93,16 @@ void	check_pipe(t_pipe *pipe, t_mini *index, t_idx *id, char *str)
 	}
 }
 
-void    sig_handler(int signum)
-{
-    if (signum == SIGINT)
-    {
-        printf("\n");
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
-}
+// void    sig_handler(int signum)
+// {
+//     if (signum == SIGINT)
+//     {
+//         printf("\n");
+//         rl_on_new_line();
+//         rl_replace_line("", 0);
+//         rl_redisplay();
+//     }
+// }
 
 int main(int ac, char **av, char **env)
 {
@@ -126,7 +126,7 @@ int main(int ac, char **av, char **env)
 	id.d = 0;
 	id.poor = 1;
 	id.cot = 0;
-	signal(SIGINT, sigint_handler);
+	// signal(SIGINT, sigint_handler);
 	while (1)
 	{
 		str = readline("minishell >$ ");
@@ -134,8 +134,10 @@ int main(int ac, char **av, char **env)
 		{
 			add_history(str);
 			check_pipe(&pipe, &index, &id, str);
-			//ft_redirections(&index, &id, &pipe, str);
-			ft_heredoce(&index, &id, &pipe, str);
+			if (str[0] == '<' && str[1] == '<')
+				ft_heredoce(&index, &id, &pipe, str);
+			else
+				ft_redirections(&index, &id, &pipe, str);
 			a = find_space(str);
 			if (a == 1)
 			{

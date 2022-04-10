@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 01:05:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/10 00:52:05 by otmallah         ###   ########.fr       */
+/*   Created: 2022/04/09 00:29:29 by otmallah          #+#    #+#             */
+/*   Updated: 2022/04/09 00:29:31 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include <unistd.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-// void    sigint_handler(int signum)
-// {
-//     if (signum == SIGINT)
-//     {
-//         printf("\n");
-//         rl_on_new_line();
-//         rl_replace_line("", 0);
-//         rl_redisplay();
-//     }
-// }
+char	*get_next_line(int fd);
+
+#endif

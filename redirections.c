@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 21:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/08 16:05:54 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/04/09 00:14:22 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 	int ID_FOR;
     char **tab;
 	char *TEMP;
+	int fd = 0;
 
     a = find_red(str);
     if (a == 1) 
@@ -92,7 +93,8 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 				TEMP = readline("");
 				if (ft_strcmp(TEMP, "stop") == 0)
 					break ;
-				int fd = open(tab[0], O_CREAT | O_RDWR , 0777);
+				if (fd == 0)
+					fd = open(tab[0], O_CREAT | O_RDWR , 0777);
 				write (fd, TEMP, ft_strlen(TEMP));
 				write (fd, "\n", 1);
 			}
@@ -100,7 +102,7 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 		else
 		{
         	tab = ft_split(str, '>');
-        	int fd = open(tab[1], O_CREAT | O_RDWR , 0777);
+        	int fd = open(tab[1], O_CREAT | O_WRONLY);
 			if (ft_strcmp(tab[0], "export") == 0)
 			{
 				dup2(fd, STDOUT_FILENO);
@@ -113,8 +115,7 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 				ID_FOR = fork();
 				if (ID_FOR == 0)
 				{
-					//printf("%d\n", FD_TE);
-					dup2(FD_TE, STDIN_FILENO);
+					dup2(0, STDIN_FILENO);
         			dup2(fd, STDOUT_FILENO);
 					find_path_red(tab[0], pipx, index);
 				}

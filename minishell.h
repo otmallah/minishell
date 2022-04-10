@@ -71,6 +71,7 @@ t_list	*ft_lstlast(t_list *lst);
 char	*ft_strrchr(const char *str, int c);
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
+char	*get_next_line(int fd);
 
 //utils export
 
