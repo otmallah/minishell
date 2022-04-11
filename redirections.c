@@ -9,7 +9,6 @@
 /*   Updated: 2022/04/09 00:14:22 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 int find_red(char *str)
@@ -21,9 +20,11 @@ int find_red(char *str)
     {
 		if (str[i] == '>' && str[i + 1] == '>')
 			return 2;
-        if (str[i] == '>')
+        else if (str[i] == '>')
             return 1;
-        i++;
+        else if (str[i] == '<')
+			return 3;
+		i++;
     }
 	return 0;
 }
@@ -42,7 +43,7 @@ int	find_space5(char *tab)
 	return 0;
 }
 
-void	find_path_red(char *str, t_pipe *index, t_mini *id)
+int	find_path_red(char *str, t_pipe *index, t_mini *id)
 {
 	int i;
 	int a;
@@ -74,7 +75,21 @@ void	find_path_red(char *str, t_pipe *index, t_mini *id)
 		}
 		i++;
 	}
+	return 1;
 }
+
+// void	open_files(char *str)
+// {
+// 	int i;
+// 	int j;
+// 	int fd;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+
+// 	}
+// }
 
 void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 {
@@ -93,8 +108,7 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 		tab = ft_split(str, '>');
 		fd = open(tab[0], O_CREAT | O_RDWR , 0777);
 	}
-    a = find_red(str);
-	if (a == 2)
+	else if (find_red(str) == 2)
 	{
 		tab = ft_split(str, '>');
 		fd = open(tab[1], O_CREAT | O_RDWR | O_APPEND , 0777);
@@ -105,7 +119,23 @@ void	ft_redirections(t_mini *index, t_idx *id, t_pipe *pipx, char *str)
 			find_path_red(tab[0], pipx, index);
 		}
 		wait(NULL);
-		//close(fd);
+	}
+	else if (find_red(str) == 3)
+	{
+		tab = ft_split(str, '<');
+		if (access(tab[1] , F_OK) == 0)
+		{
+			int fd = open(tab[1], O_RDONLY);
+			if (fork() == 0)
+			{
+				dup2(fd, STDIN_FILENO);
+				find_path_red(tab[0], pipx, index);
+			}
+			wait(NULL);
+			close(fd);
+		}
+		else
+			printf("minishell : %s:No such file or directory", tab[1]);
 	}
 	else
 	{
