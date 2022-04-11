@@ -117,8 +117,15 @@ void	find_redirection(t_mini *index, t_idx *id, t_pipe *pipx)
 	{
 		while (pipx->tab[i][j])
 		{
-			if (pipx->tab[i][j] == '>')
+			if (pipx->tab[i][j] == '<' && pipx->tab[i][j + 1] != '<')
+			{
 				ft_redirections(index, id, pipx, pipx->tab[i]);
+				break ;
+			}
+			else if (pipx->tab[i][j] == '>' && pipx->tab[i][j + 1] != '>')
+			{
+				ft_redirections(index, id, pipx, pipx->tab[i]);
+			}
 			j++;
 		}
 		j = 0;
