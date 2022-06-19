@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/18 13:08:20 by otmallah          #+#    #+#             */
+/*   Updated: 2022/06/17 13:53:12 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strrchr(const char *str, int c)
+void	ft_echo(t_shell *mini, char **str, int fd)
 {
-	char	*st;
 	int		i;
 
-	st = (char *)str;
-	i = ft_strlen(st);
-	while (i >= 0)
+	i = 1;
+	while (str[i])
 	{
-		if (st[i] == (unsigned char)c)
-        {
-            i--;
-			return (st + i);
-        }
-        i--;
+		if (ft_strcmp(str[1], "-n") == 0 && i == 1)
+			i++;
+		if (str[i])
+		{
+			write (fd, str[i], ft_strlen(str[i]));
+			if (str[i + 1] != NULL)
+				write(fd, " ", 1);
+			i++;
+		}
 	}
-	return (NULL);
+	if (str[1])
+	{
+		if (strcmp(str[1], "-n") != 0)
+			ft_putstr_fd("\n", fd);
+	}
+	else
+		ft_putstr_fd("\n", fd);
 }

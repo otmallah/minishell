@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:33:22 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 16:33:24 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:11:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../shell.h"
 
 static char	*ft_strcat(char *str1, char *str2)
 {

@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/21 15:13:55 by otmallah          #+#    #+#             */
+/*   Updated: 2022/06/17 11:52:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strrchr(const char *str, int c)
+void	ft_env(t_shell *index, int fd)
 {
-	char	*st;
-	int		i;
+	int	i;
 
-	st = (char *)str;
-	i = ft_strlen(st);
-	while (i >= 0)
+	i = 0;
+	while (index->tab_save_env[i])
 	{
-		if (st[i] == (unsigned char)c)
-        {
-            i--;
-			return (st + i);
-        }
-        i--;
+		ft_putendl_fd(index->tab_save_env[i], fd);
+		i++;
 	}
-	return (NULL);
+	if (index->tab_save_exp)
+	{
+		i = 0;
+		while (index->tab_save_exp[i])
+		{
+			if (len(index->tab_save_exp[i]) != 0)
+				ft_putendl_fd(index->tab_save_exp[i], fd);
+			i++;
+		}
+	}
 }

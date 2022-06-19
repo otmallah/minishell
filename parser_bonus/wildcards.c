@@ -1,32 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Created: 2022/06/16 14:38:03 by otmallah          #+#    #+#             */
+/*   Updated: 2022/06/16 14:44:51 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strrchr(const char *str, int c)
-{
-	char	*st;
-	int		i;
-
-	st = (char *)str;
-	i = ft_strlen(st);
-	while (i >= 0)
-	{
-		if (st[i] == (unsigned char)c)
-        {
-            i--;
-			return (st + i);
-        }
-        i--;
-	}
-	return (NULL);
-}

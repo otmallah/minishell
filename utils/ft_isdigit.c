@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/29 14:32:55 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/31 17:15:50 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strrchr(const char *str, int c)
+int	ft_isdigit(int c)
 {
-	char	*st;
-	int		i;
-
-	st = (char *)str;
-	i = ft_strlen(st);
-	while (i >= 0)
-	{
-		if (st[i] == (unsigned char)c)
-        {
-            i--;
-			return (st + i);
-        }
-        i--;
-	}
-	return (NULL);
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
 }

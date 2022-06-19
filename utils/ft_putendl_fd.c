@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/20 19:03:34 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/31 18:05:49 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strrchr(const char *str, int c)
+void	ft_putendl_fd(char *s,	int fd)
 {
-	char	*st;
-	int		i;
-
-	st = (char *)str;
-	i = ft_strlen(st);
-	while (i >= 0)
+	if (s)
 	{
-		if (st[i] == (unsigned char)c)
-        {
-            i--;
-			return (st + i);
-        }
-        i--;
+		ft_putstr_fd(s, fd);
+		write (fd, "\n", 1);
 	}
-	return (NULL);
 }

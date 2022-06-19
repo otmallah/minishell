@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "../minishell.h"
+#include "../shell.h"
 
 static void	check(const char *s, char *su, int sta, int len)
 {

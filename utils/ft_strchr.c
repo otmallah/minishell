@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 20:35:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 20:35:09 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:50:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../shell.h"
 
 char	*ft_strchr(const char *str, int c)
 {
@@ -22,7 +22,7 @@ char	*ft_strchr(const char *str, int c)
 	while (st[i])
 	{
 		if (st[i] == (char)c)
-			return (st + i);
+			return (st + i + 1);
 		i++;
 	}
 	if (st[i] == (char)c)

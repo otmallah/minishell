@@ -6,32 +6,11 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 00:29:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/04/09 00:32:21 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/11 13:50:43 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-
-char	*ft_strdup(char *str)
-{
-	int		i;
-	int		j;
-	char	*sec;
-
-	j = 0;
-	i = ft_strlen(str);
-	sec = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (str[i])
-	{
-		sec[j] = str[i];
-		i++;
-		j++;
-	}
-	sec[j] = '\0';
-	return (sec);
-}
+#include "../header/minishell.h"
 
 char	*ft_strjoin2(char *str, char c)
 {

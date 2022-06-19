@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/23 17:08:28 by otmallah          #+#    #+#             */
+/*   Updated: 2022/05/23 17:08:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strrchr(const char *str, int c)
+void	*ft_calloc(size_t n, size_t c)
 {
-	char	*st;
-	int		i;
+	void		*str;
+	size_t		i;
 
-	st = (char *)str;
-	i = ft_strlen(st);
-	while (i >= 0)
+	i = 0;
+	str = malloc(n * c);
+	if (str == 0)
+		return (NULL);
+	while (i < (n * c))
 	{
-		if (st[i] == (unsigned char)c)
-        {
-            i--;
-			return (st + i);
-        }
-        i--;
+		((char *)str)[i] = 0;
+		i++;
 	}
-	return (NULL);
+	return (str);
 }

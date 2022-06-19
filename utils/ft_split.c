@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../shell.h"
 
 static int	size(const char	*s, char c)
 {

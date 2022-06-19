@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:20 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 16:28:23 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:16:27 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../shell.h"
 
-#include "../minishell.h"
-
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t i;
 
