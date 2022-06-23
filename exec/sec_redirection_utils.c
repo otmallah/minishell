@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:37:09 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 18:33:42 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/22 19:25:29 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,30 @@ int	utils_redin(t_list *lst)
 	return (fd_in);
 }
 
-void	change_in(t_list **lst)
+void	change_in(t_list **lst, t_shell *mini)
 {
 	int		i;
-	char	**tab;
+	char	*temp;
 
 	i = 0;
-	tab = cmd(*lst);
-	if (tab[0])
+	if (mini->tab_of_norm[i])
 	{
-		while (tab[i])
+		while ((*lst)->val[i])
+			free((*lst)->val[i++]);
+		free((*lst)->val);
+		(*lst)->val = malloc(sizeof(char *) * (size_vl(mini->tab_of_norm) + 1));
+		i = 0;
+		while (mini->tab_of_norm[i])
 		{
-			(*lst)->val[i] = tab[i];
+			(*lst)->val[i] = strdup(mini->tab_of_norm[i]);
+			free(mini->tab_of_norm[i]);
 			i++;
 		}
 		(*lst)->val[i] = NULL;
 		(*lst)->v_type[0] = 1;
 		(*lst)->v_type[1] = 2;
 	}
+	free(mini->tab_of_norm);
 }
 
 int	utils_re(t_list *lst, int fd_in, int k)

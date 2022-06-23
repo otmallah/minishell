@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:39:19 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/04 14:40:48 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:16:41 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ void	ft_putstr_fd(char *str, int fd)
 		write(fd, str, ft_strlen(str));
 }
 
-
 int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);
 	return (0);
 }
-

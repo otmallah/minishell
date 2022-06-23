@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:55:24 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 14:30:13 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 00:53:28 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	pipes(t_shell *mini, t_list *list)
 	int		fd[2];
 	t_list	*head;
 	int		i;
-	int		fs;
 
-	fs = 0;
+	mini->fs = 0;
+	mini->cnt = 0;
 	mini->num_cmd = num_of_cmd(list);
 	mini->num_ofall_cmd = mini->num_cmd;
 	mini->save = malloc(sizeof(int) * mini->num_cmd);
@@ -62,7 +62,7 @@ void	pipes(t_shell *mini, t_list *list)
 	if (mini->cnt == 2)
 	{
 		list = head;
-		ex(mini, list, mini->save, fs);
+		ex(mini, list, mini->save, mini->fs);
 	}
 	while (mini->fs-- >= 0)
 		waitpid(mini->save[mini->fs], 0, 0);
@@ -83,6 +83,7 @@ void	simple_cmd(t_shell *mini, t_list *list, int i, int *fd)
 {
 	mini->counter = i + 1;
 	mini->id = fork();
+	id = mini->id;
 	if (mini->id == 0)
 	{
 		if (i == 0)

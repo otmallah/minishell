@@ -6,12 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:34:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 14:46:04 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/23 04:51:26 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-#include "../header/utiles_functions.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 int	fd_i(t_list *list)
 {
@@ -46,7 +46,6 @@ void	exec_her(t_list *list, t_shell *mini, int num, int fd_out)
 	fd_in = fd_i(list);
 	fd = open("/tmp/test", O_RDWR, 0644);
 	norm_exec_her(mini, &list);
-	ft_exit_status(mini, list);
 	if (fork() == 0)
 	{
 		if (out == 1 && num == 1)
@@ -73,23 +72,32 @@ void	true_while(t_shell *mini, char **tab, int size)
 
 	i = 0;
 	fd = open("/tmp/test", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	signal(SIGINT, handler);
+	signal(SIGQUIT, handler);
 	while (1)
 	{
+		cheecker = 1;
 		find = readline("> ");
 		if (find == NULL)
 			break ;
 		if (strcmp(find, tab[i]) == 0 && tab[i])
 		{
+			free(tab[i]);
 			size--;
 			i++;
 			if (size == 0)
+			{
+				free(find);
 				break ;
+			}
 			else
 				fd = open("/tmp/test", O_RDWR | O_TRUNC, 0644);
 		}
 		if (size != 0)
 			ft_putendl_fd(find, fd);
+		free(find);
 	}
+	free(tab);
 }
 
 void	heredoc(t_shell *mini, t_list *list, int num, int fd_out)

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:12:10 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 18:33:32 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 23:23:09 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ex(t_shell *mini, t_list *list, int *save, int fs)
 
 	fd = open("/tmp/test", O_CREAT | O_RDWR);
 	mini->id = fork();
+	id = mini->id;
 	if (mini->id == 0)
 	{
 		if (list->next && (list->next->v_type[0] == 6
@@ -73,7 +74,7 @@ void	ex(t_shell *mini, t_list *list, int *save, int fs)
 			dup2(fd, 1);
 			exec_cmd(mini, list);
 		}
+		wait(NULL);
 		exit(0);
 	}
-	save[fs] = mini->id;
 }

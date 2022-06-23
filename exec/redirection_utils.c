@@ -6,12 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 18:35:02 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:19:44 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-#include "../header/minishell.h"
+#include "../sec_parsing/header/minishell.h"
 
 int	utils_files(t_list *list, int a, int fd, int fd_in)
 {
@@ -73,7 +73,7 @@ char	**cmd_utils(t_list *list, char **tab)
 		{
 			while (list->val[k])
 			{
-				tab[i++] = list->val[k];
+				tab[i++] = strdup(list->val[k]);
 				k++;
 			}
 			k = 2;
@@ -117,26 +117,46 @@ void	utils_red(t_list **lst, t_shell *mini)
 	char	**tab;
 	int		ij;
 	int		io;
+	int		k;
+	char	*temp;
 
 	ij = 0;
 	io = 0;
+	k = 0;
 	tab = cmd(*lst);
 	if (tab[0])
 	{
 		if ((*lst)->v_type[0] == 1)
 		{
+			k = 1;
 			while ((*lst)->val[ij])
 				ij++;
 		}
+		if (k != 1)
+		{
+			while ((*lst)->val[ij])
+				free((*lst)->val[ij++]);
+			free((*lst)->val);
+			(*lst)->val = malloc(sizeof(char *) * (size_vl(tab) + 1));
+			ij = 0;
+		}
 		while (tab[io])
 		{
-			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[ij] = tab[io];
-			ij++;
-			io++;
+			if (k == 1)
+			{
+				(*lst)->val = ft_realloc_char((*lst)->val);
+				(*lst)->val[ij++] = strdup(tab[io++]);
+				free(tab[io - 1]);
+			}
+			else
+			{
+				(*lst)->val[ij++] = strdup(tab[io++]);
+				free(tab[io - 1]);
+			}
 		}
 		(*lst)->val[ij] = NULL;
 		(*lst)->v_type[0] = 1;
 		(*lst)->v_type[1] = 2;
 	}
+	free(tab);
 }

@@ -6,12 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 22:57:49 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 18:13:41 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:50:11 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-#include "../header/utiles_functions.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	exec_first_cmd_in_her(t_list *list, t_shell *mini, int fd_out, int num)
 {
@@ -79,7 +79,7 @@ void	norme_first_cmd(t_list **list, t_shell *mini)
 		while (sec_tab[io])
 		{
 			(*list)->val = ft_realloc_char((*list)->val);
-			(*list)->val[lp] = sec_tab[io];
+			(*list)->val[lp] = strdup(sec_tab[io]);
 			io++;
 			lp++;
 		}
@@ -126,22 +126,21 @@ void	norm_exec_her(t_shell *mini, t_list **list)
 
 	io = 0;
 	sec_tab = save_cmd(*list);
-	if (sec_tab[1])
+	if (sec_tab[0])
 	{
-		while ((*list)->val[io])
+		while (sec_tab[io])
 		{
-			(*list)->val = ft_realloc_char((*list)->val);
 			(*list)->val[io] = sec_tab[io];
 			io++;
 		}
+		(*list)->val[io] = NULL;
 		(*list)->v_type[0] = 1;
 		(*list)->v_type[1] = 2;
 	}
 	else if (sec_tab[0])
 	{
-		(*list)->val[0] = sec_tab[0];
-		(*list)->val[1] = NULL;
 		(*list)->v_type[0] = 1;
 		(*list)->v_type[1] = 2;
 	}
+	ft_exit_status(mini, *list);
 }

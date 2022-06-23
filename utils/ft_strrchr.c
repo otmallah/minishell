@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:59:44 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/18 14:42:48 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:17:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*ft_strrchr(const char *str, int c)
 	while (i >= 0)
 	{
 		if (st[i] == (unsigned char)c)
-        {
-            i--;
+		{
+			i--;
 			return (st + i);
-        }
-        i--;
+		}
+		i--;
 	}
 	return (NULL);
 }

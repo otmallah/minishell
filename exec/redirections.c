@@ -6,12 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:24:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/19 18:10:27 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/22 19:18:54 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-#include "../header/minishell.h"
+#include "../sec_parsing/header/minishell.h"
 
 void	normm3(t_shell *mini, t_list *list, int fd_in, int fd_out);
 void	normee4(t_shell *mini, t_list *list);
@@ -34,26 +34,48 @@ void	change_in2(t_list **lst)
 		while (tab[j])
 		{
 			(*lst)->val = ft_realloc_char((*lst)->val);
-			(*lst)->val[i] = tab[j];
-			i++;
-			j++;
+			(*lst)->val[i++] = strdup(tab[j++]);
+			free(tab[j - 1]);
 		}
-		(*lst)->val[i] = malloc(sizeof(char *));
 		(*lst)->val[i] = NULL;
 		(*lst)->v_type[0] = 1;
 		(*lst)->v_type[1] = 2;
 	}
+	free(tab);
+}
+
+void	utils_r(t_shell *mini, t_list *lst, t_global *globale, int num)
+{
+	ft_exit_status(mini, lst);
+	mini->id = fork();
+	if (mini->id == 0)
+	{
+		dup2(globale->global_fd_in, 0);
+		if (globale->global_fd_out != 1)
+			dup2(globale->global_fd_out, 1);
+		else if (mini->counter == mini->num_ofall_cmd)
+			dup2(1, 1);
+		else if (num == 1 && globale->global_fd_out == 1)
+			dup2(globale->global_fd, 1);
+		ft_check_built(mini, lst, globale->global_fd_out);
+		exit(0);
+	}
+	close(globale->global_fd_in);
+	if (globale->global_fd_out != 1)
+		close(globale->global_fd_out);
+	wait(NULL);
+	kill(9, mini->id);
 }
 
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
 {
-	int		fd_in;
-	int		fd_out;
-	t_list	*head;
-	int		k;
+	int			fd_in;
+	int			fd_out;
+	t_list		*head;
+	t_global	globale;
+	int			k;
 
 	head = lst;
-	fd_out = 1;
 	k = 2;
 	if (lst->v_type[0] == 1)
 	{
@@ -64,28 +86,10 @@ void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num)
 		change_in2(&lst);
 		if (fd_in != 0)
 		{
-			if (fd_out != -1)
-			{
-				ft_exit_status(mini, lst);
-				mini->id = fork();
-				if (mini->id == 0)
-				{
-					dup2(fd_in, 0);
-					if (fd_out != 1)
-						dup2(fd_out, 1);
-					else if (mini->counter == mini->num_ofall_cmd)
-						dup2(1, 1);
-					else if (num == 1 && fd_out == 1)
-						dup2(te_fd, 1);
-					ft_check_built(mini, lst, fd_out);
-					exit(0);
-				}
-				close(fd_in);
-				if (fd_out != 1)
-					close(fd_out);
-				wait(NULL);
-				kill(9, mini->id);
-			}
+			globale.global_fd = te_fd;
+			globale.global_fd_in = fd_in;
+			globale.global_fd_out = fd_out;
+			utils_r(mini, lst, &globale, num);
 		}
 	}
 	else
@@ -103,7 +107,7 @@ void	normee4(t_shell *mini, t_list *list)
 	fd_in = utils_redin(list);
 	list = head;
 	mini->tab_of_norm = cmd(list);
-	change_in(&list);
+	change_in(&list, mini);
 	if (fd_in != 0 && mini->tab_of_norm[0])
 		normm3(mini, list, fd_in, fd_out);
 }

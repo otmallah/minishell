@@ -5,14 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/09 00:29:08 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/11 13:50:43 by otmallah         ###   ########.fr       */
+/*   Created: 2022/05/27 14:59:00 by otmallah          #+#    #+#             */
+/*   Updated: 2022/06/23 01:37:38 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
-char	*ft_strjoin2(char *str, char c)
+char	*ft_charjoin(char *str, char c)
 {
 	int		i;
 	int		size;
@@ -50,7 +51,7 @@ char	*get_next_line(int fd)
 	str = ft_strdup("");
 	while (rd > 0)
 	{
-		str = ft_strjoin2(str, buff);
+		str = ft_charjoin(str, buff);
 		if (buff == '\n')
 			break ;
 		rd = read(fd, &buff, 1);

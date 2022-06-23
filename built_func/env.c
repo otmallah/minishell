@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 15:13:55 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 11:52:24 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:36:07 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	ft_env(t_shell *index, int fd)
 		while (index->tab_save_exp[i])
 		{
 			if (len(index->tab_save_exp[i]) != 0)
+			{
+				puts("hana");
 				ft_putendl_fd(index->tab_save_exp[i], fd);
+			}
 			i++;
 		}
 	}

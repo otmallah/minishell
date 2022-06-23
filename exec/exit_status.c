@@ -6,11 +6,12 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:43:14 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/17 20:54:57 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 23:49:20 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../sec_parsing/header/utiles_functions.h"
 
 void	ft_check_cmd2(t_shell *mini, t_list *lst);
 char	*check_path_if_exi2(t_shell *mini);
@@ -23,23 +24,13 @@ void	ft_exit_status(t_shell *mini, t_list *lst)
 	int		i;
 
 	i = 0;
+	str = check_path_if_exi2(mini);
 	if (lst->val[0][0] == '.' || lst->val[0][0] == '/')
 		ft_check_cmd2(mini, lst);
-	else if (check_path_if_exi2(mini) != NULL)
-	{
-		str = check_path_if_exi(mini);
-		if (str != NULL)
-		{
-			if (find(str) == 1)
-				temp = ft_split(str, ':');
-			else
-			{
-				temp = (char **)malloc(sizeof(char *) * 2);
-				temp[i] = str;
-				temp[i + 1] = NULL;
-			}
-			normi(temp, mini, lst);
-		}
+	else if (str != NULL)
+	{	
+		temp = ft_split(str, ':');
+		normi(temp, mini, lst);
 	}
 	else
 		g_status_exec = 127;
@@ -50,9 +41,9 @@ void	ft_check_cmd2(t_shell *mini, t_list *lst)
 	DIR	*dp;
 
 	dp = opendir(lst->val[0]);
-	if ((int)dp == 512)
+	if ((int)dp != 0)
 		g_status_exec = 126;
-	if (lst->val[0][0] == '.')
+	else if (lst->val[0][0] == '.')
 	{
 		if (access(lst->val[0], F_OK | X_OK) == 0)
 			g_status_exec = 0;
@@ -71,18 +62,19 @@ void	ft_check_cmd2(t_shell *mini, t_list *lst)
 void	normi(char **temp, t_shell *mini, t_list *lst)
 {
 	int		i;
-	int		size;
 	char	*str;
 
 	i = 0;
 	while (temp[i])
 	{
-		size = ft_strlen(temp[i]);
-		temp[i] = ft_strjoin(temp[i], "/");
-		str = ft_strjoin(temp[i], lst->val[0]);
-		free(temp[i]);
+		temp[i] = ft_h_strjoin(temp[i], "/");
+		str = ft_h_strjoin(temp[i], lst->val[0]);
 		if (access(str, F_OK) == 0)
 		{
+			i++;
+			while (temp[i])
+				free(temp[i++]);
+			free(str);
 			g_status_exec = 0;
 			i = -1;
 			break ;
@@ -95,6 +87,26 @@ void	normi(char **temp, t_shell *mini, t_list *lst)
 		g_status_exec = 127;
 }
 
+char	*utils_check_path_if_exi2(t_shell *mini)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while (mini->tab_save_exp[i])
+	{
+		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
+		if (strcmp(temp, "PATH") == 0)
+		{
+			free(temp);
+			return (ft_strchr(mini->tab_save_exp[i], '='));
+		}
+		free(temp);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*check_path_if_exi2(t_shell *mini)
 {
 	int		i;
@@ -105,18 +117,14 @@ char	*check_path_if_exi2(t_shell *mini)
 	{
 		temp = ft_substr(mini->tab_save_env[i], 0, len(mini->tab_save_env[i]));
 		if (strcmp(temp, "PATH") == 0)
+		{
+			free(temp);
 			return (ft_strchr(mini->tab_save_env[i], '='));
+		}
 		free(temp);
 		i++;
 	}
 	if (mini->tab_save_exp && mini->tab_save_exp[0] != NULL)
-	{
-		i = 0;
-		temp = ft_substr(mini->tab_save_exp[i], 0, len(mini->tab_save_exp[i]));
-		if (strcmp(temp, "PATH") == 0)
-			return (ft_strchr(mini->tab_save_exp[i], '='));
-		free(temp);
-		i++;
-	}
+		return (utils_check_path_if_exi2(mini));
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:33:22 by otmallah          #+#    #+#             */
-/*   Updated: 2022/05/16 22:11:11 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:17:14 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static char	*ft_strcat(char *str1, char *str2)
 		str1[i + j] = str2[j];
 		j++;
 	}
-	//str2[j] = '/';
 	str1[i + j] = '\0';
 	return (str1);
 }

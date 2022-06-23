@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otmallah <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:26:38 by otmallah          #+#    #+#             */
-/*   Updated: 2022/03/18 16:26:41 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:18:07 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../shell.h"
 
@@ -31,7 +30,6 @@ static void	check(const char *s, char *su, int sta, int len)
 	}
 	su[j] = '\0';
 }
-
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {

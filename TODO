@@ -1,9 +1,0 @@
-<< del cmd 
-exit status 
-ft_getenv
-
-1): herdoc inside pipes
-
-echo "a b c d f"
-
-red and herdoc same cmd

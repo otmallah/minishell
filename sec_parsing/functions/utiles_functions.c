@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utiles_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:47:45 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/05/30 17:47:48 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/21 20:31:13 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/utiles_functions.h"
-
-unsigned int  ft_strlen(char *src)
-{
-    unsigned int    i;
-
-    i = 0;
-    while(src && src[i])
-        i++;
-    return(i);
-}
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
@@ -32,7 +22,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	j = 0;
 	len_s = 0;
 	lendst = ft_strlen(dst);
-	i = ft_strlen(dst); 
+	i = ft_strlen(dst);
 	while (src[len_s] != '\0')
 		len_s++;
 	if (dstsize == 0 || dstsize <= lendst)
@@ -62,8 +52,8 @@ char	*ft_h_strjoin(char *s1, char *s2)
 	if (!ptr)
 		return (NULL);
 	*ptr = '\0';
-    if (s1)
-	    ft_strlcat(ptr, (char *)s1, len + 1);
+	if (s1)
+		ft_strlcat(ptr, (char *)s1, len + 1);
 	ft_strlcat(ptr, (char *)s2, len + len1 + 1);
 	if (s1)
 		free(s1);
@@ -90,13 +80,13 @@ char	*ft_strdup(char *s1)
 	return (ptr);
 }
 
-char **ft_realloc_char(char **str)
+char	**ft_realloc_char(char **str)
 {
-	char  **tab;
+	char	**tab;
 	int		i;
-	
+
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	tab = malloc(sizeof(char *) * (i + 2));
 	i = 0;
@@ -107,17 +97,19 @@ char **ft_realloc_char(char **str)
 		str[i] = NULL;
 		i++;
 	}
+	free(str);
+	tab[i] = NULL;
 	tab[i + 1] = NULL;
 	return (tab);
 }
 
-int *ft_realloc_int(int *tab, char **str)
+int	*ft_realloc_int(int *tab, char **str)
 {
-	int		i;
-	int  	*new_tab;
+	int	i;
+	int	*new_tab;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	new_tab = malloc(sizeof(int *) * i);
 	i = 0;
