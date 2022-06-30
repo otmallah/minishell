@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:41:04 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/19 19:41:06 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/24 10:11:24 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,12 @@ char	*check_var(t_lexer *lexer)
 	else if (lexer->c == '?')
 	{
 		lexer_advance(lexer);
-		return (ft_itoa(g_status_exec));
+		return (ft_itoa(g_id.g_status_exec));
 	}
 	else if ((lexer->c >= '0' && lexer->c <= '9') || lexer->c == '*')
 	{
 		lexer_advance(lexer);
 		return (ft_strdup(""));
-	}
-	else if (lexer->c == '$')
-	{
-		lexer_advance(lexer);
-		return (ft_itoa(getpid()));
 	}
 	else
 		return (check_var_second(lexer, str));

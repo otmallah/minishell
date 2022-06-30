@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 19:48:55 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/19 19:48:56 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/25 22:13:45 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token	*init_token(int t_type, char *value)
 	return (token);
 }
 
-t_token	*lexer_get_next_token_second(t_lexer *lexer, t_token *token)
+t_token	*lexer_get_next_token_second(t_lexer *lexer)
 {
 	if (lexer->c == '>' && lexer->src[lexer->i + 1] == '>')
 	{
@@ -70,7 +70,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_token *token)
 				(lexer, init_token(t_heredoc, ft_strdup("<<"))));
 		}
 		else
-			return (lexer_get_next_token_second(lexer, token));
+			return (lexer_get_next_token_second(lexer));
 	}
 	return (NULL);
 }

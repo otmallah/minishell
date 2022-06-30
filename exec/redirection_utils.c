@@ -6,12 +6,14 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:34:59 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/22 22:19:44 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:45:57 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 #include "../sec_parsing/header/minishell.h"
+
+void	sec_utils_red(t_list **lst, char **tab, int ij, int k);
 
 int	utils_files(t_list *list, int a, int fd, int fd_in)
 {
@@ -36,13 +38,12 @@ int	utils_files(t_list *list, int a, int fd, int fd_in)
 int	open_all_files(t_list *list, int a)
 {
 	int		fd;
-	int		fd_in;
 	char	*str;
 
 	fd = 1;
 	while (list && list->v_type[0] != 11)
 	{
-		fd = utils_files(list, a, fd, fd_in);
+		fd = utils_files(list, a, fd, 0);
 		if (list->v_type[0] == 3 && a != 2)
 		{
 			while (1337)
@@ -51,7 +52,11 @@ int	open_all_files(t_list *list, int a)
 				if (str == NULL)
 					break ;
 				if (ft_strcmp(str, list->val[1]) == 0)
+				{
+					free(str);
 					break ;
+				}
+				free(str);
 			}
 		}
 		list = list->next;
@@ -73,7 +78,7 @@ char	**cmd_utils(t_list *list, char **tab)
 		{
 			while (list->val[k])
 			{
-				tab[i++] = strdup(list->val[k]);
+				tab[i++] = ft_strdup(list->val[k]);
 				k++;
 			}
 			k = 2;
@@ -112,16 +117,13 @@ char	**cmd(t_list *list)
 	return ((cmd_utils(list, tab)));
 }
 
-void	utils_red(t_list **lst, t_shell *mini)
+void	utils_red(t_shell *mini, t_list **lst)
 {
 	char	**tab;
 	int		ij;
-	int		io;
 	int		k;
-	char	*temp;
 
 	ij = 0;
-	io = 0;
 	k = 0;
 	tab = cmd(*lst);
 	if (tab[0])
@@ -129,34 +131,17 @@ void	utils_red(t_list **lst, t_shell *mini)
 		if ((*lst)->v_type[0] == 1)
 		{
 			k = 1;
-			while ((*lst)->val[ij])
-				ij++;
+			ij = size_tab((*lst)->val);
 		}
 		if (k != 1)
 		{
-			while ((*lst)->val[ij])
-				free((*lst)->val[ij++]);
-			free((*lst)->val);
+			ij = ft_free_lst_val(lst, ij);
 			(*lst)->val = malloc(sizeof(char *) * (size_vl(tab) + 1));
 			ij = 0;
 		}
-		while (tab[io])
-		{
-			if (k == 1)
-			{
-				(*lst)->val = ft_realloc_char((*lst)->val);
-				(*lst)->val[ij++] = strdup(tab[io++]);
-				free(tab[io - 1]);
-			}
-			else
-			{
-				(*lst)->val[ij++] = strdup(tab[io++]);
-				free(tab[io - 1]);
-			}
-		}
-		(*lst)->val[ij] = NULL;
-		(*lst)->v_type[0] = 1;
-		(*lst)->v_type[1] = 2;
+		sec_utils_red(lst, tab, ij, k);
+		ft_exit_status(mini, *lst);
 	}
-	free(tab);
+	else
+		free(tab);
 }

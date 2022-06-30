@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hjrifi <hjrifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:34:11 by hjrifi            #+#    #+#             */
-/*   Updated: 2022/06/08 10:34:13 by hjrifi           ###   ########.fr       */
+/*   Updated: 2022/06/25 22:07:59 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_check_error(t_lexer *lexer, int i)
 		if (!lexer->src[i] || (lexer->src[i] == '|'
 				|| ((lexer->src[i] == '>' || lexer->src[i] == '<')
 					&& (lexer->src[i + 1] == '>' || lexer->src[i + 1] == '<'))
-				|| (lexer->i + 1 != i && (lexer->src[i] == '<'
+				|| (lexer->i + 1 != (unsigned int)i && (lexer->src[i] == '<'
 						|| lexer->src[i] == '>'))
 				|| (lexer->src[i] == '>' && lexer->c == '<')
 				|| (lexer->src[i] == '<' && lexer->c == '>')))
@@ -64,4 +64,33 @@ int	ft_error(t_lexer *lexer)
 		i = lexer->i + 1;
 	}
 	return (ft_check_error(lexer, i));
+}
+
+t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst)
+{
+	g_id.g_status_exec = 127;
+	if (str)
+		printf("parse error %s\n", str);
+	if (lexer)
+		free(lexer);
+	if (token)
+	{
+		if (token->val)
+			free(token->val);
+		free(token);
+	}
+	if (lst)
+		ft_free_list(lst);
+	return (NULL);
+}
+
+int	finde_her(t_list *lis)
+{
+	while (lis)
+	{
+		if (lis->v_type[0] == 11)
+			return (1);
+		lis = lis->next;
+	}
+	return (0);
 }

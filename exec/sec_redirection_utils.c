@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 23:37:09 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/22 19:25:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 02:41:32 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,22 @@ void	norrrr(int fd, int in, int tem_fd)
 void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd)
 {
 	int		fd;
-	int		id;
 	int		in;
 
+	(void)a;
 	fd = open_all_files(lst, 0);
 	in = fd_i(lst);
-	utils_red(&lst, mini);
-	ft_exit_status(mini, lst);
+	utils_red(mini, &lst);
 	if (fd != -1)
 	{
-		id = fork();
-		if (id == 0 && lst->v_type[0] == 1)
+		g_id.id = fork();
+		if (g_id.id == 0 && lst->v_type[0] == 1)
 		{
 			norrrr(fd, in, tem_fd);
 			ft_check_built(mini, lst, fd);
 			exit(0);
 		}
-		else if (id == 0)
+		else if (g_id.id == 0)
 			exit(0);
 		close(fd);
 		wait(NULL);
@@ -71,7 +70,6 @@ int	utils_redin(t_list *lst)
 void	change_in(t_list **lst, t_shell *mini)
 {
 	int		i;
-	char	*temp;
 
 	i = 0;
 	if (mini->tab_of_norm[i])

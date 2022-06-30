@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 17:43:32 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/22 18:53:38 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/26 01:03:46 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,8 @@ void	normm(t_list *list, t_shell *mini, int *fd, int i)
 	if (list && ft_strcmp(list->val[0], "exit") == 0 && list->val[1])
 		ft_exit(list->val, 1, 1);
 	else if (list && list->next && list->next->v_type[0] != 3 && i == 0
-		&& (ft_strcmp(list->val[0], "cat") == 0
-			|| ft_strcmp(list->val[0], "wc") == 0
-			|| ft_strcmp(list->val[0], "grep") == 0
-			|| ft_strcmp(list->val[0], "more") == 0))
-	{
+		&& ft_check_cmd_out(list))
 		mini->cnt = 2;
-	}
 	else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
 	{
 		mini->counter = i + 1;

@@ -6,7 +6,7 @@
 /*   By: otmallah <otmallah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 20:46:41 by otmallah          #+#    #+#             */
-/*   Updated: 2022/06/23 04:51:29 by otmallah         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:05:05 by otmallah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@
 # include <dirent.h>
 # include <errno.h>
 
-unsigned int	g_status_exec;
-int				id;
-int				g_fd;
-int				cheecker;
+typedef struct s_ids
+{
+	unsigned int	g_status_exec;
+	int				id;
+	int				cheecker;
+	int				g_fd;
+	int				failer;
+	int				sig;
+}	t_ids;
+
+t_ids	g_id;
 
 typedef struct s_shell {
 	char	**tab_save_exp;
@@ -62,9 +69,10 @@ typedef struct t_list
 	struct t_list	*prev;
 }	t_list;
 
-char	*get_next_line(int fd);
-void	ft_free(char **tab);
+int		ft_atoi(const char *str);
+void	add_name2(int i, char *str);
 void	handler(int sig);
+void	ft_free(char **tab);
 char	*utils_path_if_exi(t_shell *mini);
 char	*ft_getenv_utils(t_shell *m, char *str);
 int		size_vl(char **str);
@@ -77,11 +85,11 @@ void	change_in(t_list **lst, t_shell *mini);
 int		utils_re(t_list *lst, int fd_in, int k);
 char	**cmd_utils(t_list *list, char **tab);
 char	**cmd(t_list *list);
-void	utils_red(t_list **lst, t_shell *mini);
+void	utils_red(t_shell *mini, t_list **lst);
 int		utils_files(t_list *list, int a, int fd, int fd_in);
 void	ex(t_shell *mini, t_list *list, int *save, int fs);
 int		size_tab(char **tab);
-void	ft_nor(t_shell *mini, int fd, int fd_out);
+void	ft_nor(t_shell *mini, int fd, int fd_out, int fd_in);
 int		ft_index(t_list *list);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(char *src);
@@ -124,6 +132,7 @@ char	**save_dele(t_list *list);
 void	norme_first_cmd(t_list **list, t_shell *mini);
 char	**save_cmd(t_list *list);
 void	norm_exec_her(t_shell *mini, t_list **list);
+
 int		check_herd(t_shell *mini, t_list *list);
 void	pipes(t_shell *mini, t_list *list);
 int		len(char *str);
@@ -136,7 +145,7 @@ int		check_duplicate(t_shell *index, char *str);
 void	exec_cmd(t_shell *mini, t_list *lst);
 void	ft_check_cmd(t_shell *mini, t_list *list);
 char	*check_path_if_exi(t_shell *mini);
-void	ft_echo(t_shell *mini, char **str, int fd);
+void	ft_echo(char **str, int fd);
 void	ft_check_built(t_shell *mini, t_list *lst, int fd);
 void	ft_redirection(t_shell *mini, t_list *lst, int a, int tem_fd);
 int		finder(char *str);
@@ -146,10 +155,12 @@ int		open_all_files(t_list *list, int a);
 void	red_in(t_shell *mini, char *str);
 int		search_path_in_env(t_shell *mini, int a);
 void	ft_redin(t_shell *mini, t_list *lst, int te_fd, int num);
-char	*ft_strstr(char *str, char *to_find, int size);
-char	*ft_strstr2(char *str, char *to_find, int size);
-void    ft_wildcards(t_list **list, t_shell *mini);
-char	*ft_strstr3(char *str, char *to_find, int size);
+void	ft_copy_tab_save_env(t_shell *index, char **temp, int n, int j);
+void	ft_check_cmd_if_exists(t_shell *mini, t_list *lst, DIR *dp);
+int		ft_free_and_dup_val(t_list **list, char **sec_tab, int io);
+int		ft_free_lst_val(t_list **lst, int ij);
+int		ft_check_cmd_out(t_list *list);
+
 // exit
 
 void	ft_exit(char **str, int fd, int num);

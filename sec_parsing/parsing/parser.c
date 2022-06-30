@@ -12,21 +12,8 @@
 
 #include "../header/minishell.h"
 
-int	check_type_value(char *str, int type)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i++] == '*')
-			return (15);
-	}
-	return (type);
-}
-
 t_list	*ft_check_parser(t_token **token, t_lexer *lexer,
-t_list *lst, t_list *head)
+t_list *lst)
 {
 	int	i;
 
@@ -37,8 +24,7 @@ t_list *lst, t_list *head)
 		lst->val = ft_realloc_char(lst->val);
 		lst->v_type = ft_realloc_int(lst->v_type, lst->val);
 		lst->val[i] = ft_strdup((*token)->val);
-		lst->v_type[i] = check_type_value(&(*token)->val[i], (*token)->e_type);
-		i++;
+		lst->v_type[i++] = (*token)->e_type;
 		free((*token)->val);
 		*token = lexer_get_next_token(lexer, *token);
 	}
@@ -49,24 +35,6 @@ t_list *lst, t_list *head)
 	if ((*token) && (*token)->e_type == t_error)
 		return (NULL);
 	return (lst);
-}
-
-t_list	*print_error(char *str, t_lexer *lexer, t_token *token, t_list *lst)
-{
-	int		i;
-
-	printf("parse error %s\n", str);
-	if (lexer)
-		free(lexer);
-	if (token)
-	{
-		if (token->val)
-			free(token->val);
-		free(token);
-	}
-	if (lst)
-		ft_free_list(lst);
-	return (NULL);
 }
 
 int	is_string_empty(char *str)
@@ -86,7 +54,7 @@ t_list *lst, t_list *head)
 {
 	while (token && token->e_type != t_error)
 	{
-		lst = ft_check_parser(&token, lexer, lst, head);
+		lst = ft_check_parser(&token, lexer, lst);
 		if (!lst)
 			return (print_error(" 003", lexer, token, head));
 		if (token && lst)
