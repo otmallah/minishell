@@ -77,7 +77,7 @@ void	normm(t_list *list, t_shell *mini, int *fd, int i)
 	if (list && ft_strcmp(list->val[0], "exit") == 0 && list->val[1])
 		ft_exit(list->val, 1, 1);
 	else if (list && list->next && list->next->v_type[0] != 3 && i == 0
-		&& ft_check_cmd_out(list))
+		&& list->val[1] && ft_check_cmd_out(list))
 		mini->cnt = 2;
 	else if ((list->next && list->next->v_type[0] == 3) || list->v_type[0] == 3)
 	{
