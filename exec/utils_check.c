@@ -49,16 +49,3 @@ int	ft_free_lst_val(t_list **lst, int ij)
 	return (ij);
 }
 
-int	ft_check_cmd_out(t_list *list)
-{
-	if (((ft_strcmp(list->val[0], "cat") == 0 && !list->val[1]
-				&& list->val[1][0] != '-')
-		|| (ft_strcmp(list->val[0], "wc") == 0 && !list->val[1]
-			&& list->val[1][0] != '-')
-			|| (ft_strcmp(list->val[0], "grep") == 0 && !list->val[1]
-			&& list->val[1][0] != '-')
-			|| (ft_strcmp(list->val[0], "more") == 0)) && !list->val[1]
-			&& list->val[1][0] != '-')
-		return (1);
-	return (0);
-}
